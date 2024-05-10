@@ -6,7 +6,7 @@ const path = require('path')
 server.set('view engine', 'ejs');
 server.set('views', [
     path.join(__dirname, '/views/Mahasiswa'),
-    path.join(__dirname, '/views/Dashboard')
+    path.join(__dirname, '/views/Dashboard'),
 ]);
 server.use(express.static(path.join(__dirname,'/assets')));
 server.use(express.static(path.join(__dirname,'/node_modules/preline/dist')));
