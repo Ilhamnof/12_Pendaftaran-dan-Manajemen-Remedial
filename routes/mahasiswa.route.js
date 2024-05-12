@@ -10,11 +10,4 @@ router.get('/',verifyToken, checkRole('mahasiswa'), (req,res)=>{
 });
 
 
-
-
-
-
-
-
-
 module.exports = router;

@@ -10,7 +10,4 @@ router.get('/dashboard',verifyToken, checkRole('admin'), (req,res)=>{
 });
 
 
-
-
-
 module.exports = router;
