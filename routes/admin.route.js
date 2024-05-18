@@ -1,11 +1,10 @@
 const express = require('express');
 const router = express.Router();
-const verifyToken = require('../middleware/verifyToken');
-const checkRole = require('../middleware/checkRole');
+const verifyTokenAndRole = require('../middleware/verifyTokenAndRole');
 
 // const controller = require('../controller/auth.controller');
 
-router.get('/dashboard',verifyToken, checkRole('admin'), (req,res)=>{
+router.get('/dashboard',verifyTokenAndRole('admin'), (req,res)=>{
     res.render('dashboard');
 });
 

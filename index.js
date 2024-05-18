@@ -3,6 +3,7 @@ const express = require("express");
 const server = express();
 const path = require("path");
 const cookieParser = require("cookie-parser");
+server.use(express.json());
 
 server.use(cookieParser());
 
@@ -25,6 +26,7 @@ server.use("/auth", auth);
 server.use("/", mahasiswa);
 server.use("/dosen", dosen);
 server.use("/admin", admin);
+
 
 server.get("*", (req, res) => {
     res.render("notfound");

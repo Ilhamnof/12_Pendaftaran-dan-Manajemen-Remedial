@@ -1,13 +1,13 @@
 const express = require('express');
 const router = express.Router();
-const verifyToken = require('../middleware/verifyToken');
-const checkRole = require('../middleware/checkRole');
-// const controller = require('../controller/auth.controller');
+const verifyTokenAndRole = require('../middleware/verifyTokenAndRole');
 
 
-router.get('/',verifyToken, checkRole('mahasiswa'), (req,res)=>{
+router.get('/',verifyTokenAndRole('mahasiswa'), (req,res)=>{
     res.render('home');
 });
-
+router.get('/ubah',verifyTokenAndRole('mahasiswa'), (req,res)=>{
+    res.render('ubahPw');
+});
 
 module.exports = router;

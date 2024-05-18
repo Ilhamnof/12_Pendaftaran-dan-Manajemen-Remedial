@@ -55,24 +55,22 @@ function logout(req, res) {
     res.redirect("/auth/login");
 }
 
-const changePassword = async (req, res) => {
+const ubahPassword = async (req, res) => {
     try {
-        const { userId, currentPassword, newPassword } = req.body;
+        const { currentPassword, newPassword } = req.body;
+        
+        // Log data yang diterima dari form
+        console.log("Request body:", req.body);
 
         // Cari pengguna berdasarkan userId
-        const user = await Users.findByPk(req.userId);
+        const user = await User.findByPk(req.userId);
         console.log(user);
         if (!user) {
-            return res
-                .status(404)
-                .json({ message: "Pengguna tidak ditemukan" });
+            return res.status(404).json({ message: "Pengguna tidak ditemukan" });
         }
 
         // Periksa apakah password saat ini cocok
-        const isPasswordValid = await bcrypt.compare(
-            currentPassword,
-            user.password
-        );
+        const isPasswordValid = await bcrypt.compare(currentPassword, user.password);
         if (!isPasswordValid) {
             return res.status(401).json({ message: "Password saat ini salah" });
         }
@@ -85,14 +83,20 @@ const changePassword = async (req, res) => {
 
         return res.status(200).json({ message: "Password berhasil diubah" });
     } catch (error) {
-        console.log(error);
+        console.log("Error during password change:", error);
         return res.status(500).json({ message: "Terjadi kesalahan server" });
     }
 };
+
+
+
+
+
 
 module.exports = {
     form,
     cekLogin,
     logout,
-    changePassword
+    ubahPassword
 };
+
