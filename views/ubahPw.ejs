@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="/style.css">
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+</head>
+<body>
+    <main id="content" class="w-full max-w-md mx-auto p-6 mt-12">
+        <div class="mt-7 bg-white border border-gray-200 rounded-xl shadow-sm">
+            <div class="p-4 sm:p-7">
+                <div class="text-center">
+                    <h1 class="block text-2xl font-bold text-gray-800">Reset Password</h1>
+                </div>
+                <div class="mt-5">
+                    <form id="passwordForm" method="post" action="/auth/ubahPassword">
+                        <div class="grid gap-y-4">
+                            <div>
+                                <label for="currentPassword" class="block text-sm mb-2">Masukkan Password</label>
+                                <div class="relative">
+                                    <input type="password" id="currentPassword" name="currentPassword" class="w-full py-3 px-4 text-sm font-medium rounded-lg border border-gray-200 bg-white text-gray-800 shadow-sm hover:bg-gray-50" required>
+                                </div>
+                            </div>
+                            <div>
+                                <label for="newPassword" class="block text-sm mb-2">Masukkan Password Baru</label>
+                                <div class="relative">
+                                    <input type="password" id="newPassword" name="newPassword" class="w-full py-3 px-4 text-sm font-medium rounded-lg border border-gray-200 bg-white text-gray-800 shadow-sm hover:bg-gray-50" required>
+                                </div>
+                            </div>
+                            <div>
+                                <label for="confirmPassword" class="block text-sm mb-2">Konfirmasi Password Baru</label>
+                                <div class="relative">
+                                    <input type="password" id="confirmPassword" name="confirmPassword" class="w-full mb-3 py-3 px-4 text-sm font-medium rounded-lg border border-gray-200 bg-white text-gray-800 shadow-sm hover:bg-gray-50" required>
+                                </div>
+                            </div>
+                            <button type="submit" class="w-full py-3 px-4 text-sm font-semibold rounded-lg border border-transparent bg-red-500 text-white hover:bg-red-700">Reset password</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </main>
+    <script>
+    document.addEventListener('DOMContentLoaded', function() {
+    const form = document.querySelector('#passwordForm');
+
+    form.addEventListener('submit', async function(event) {
+        event.preventDefault();
+
+        const currentPassword = document.getElementById('currentPassword').value;
+        const newPassword = document.getElementById('newPassword').value;
+        const confirmPassword = document.getElementById('confirmPassword').value;
+
+        // Log nilai dari form sebelum mengirim permintaan
+        console.log("Current Password:", currentPassword);
+        console.log("New Password:", newPassword);
+        console.log("Confirm Password:", confirmPassword);
+
+        if (newPassword !== confirmPassword) {
+            Swal.fire({
+                icon: 'error',
+                title: 'Oops...',
+                text: 'Password baru dan konfirmasi password tidak cocok. Mohon periksa kembali.'
+            });
+            return;
+        }
+
+        const formData = new FormData(form);
+        const data = new URLSearchParams(formData);
+
+        try {
+            const response = await fetch('/auth/ubahPassword', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/x-www-form-urlencoded',
+                },
+                body: data
+            });
+
+            const result = await response.json();
+
+            if (response.ok) {
+                Swal.fire({
+                    icon: 'success',
+                    title: 'Password berhasil diubah!',
+                    text: 'Anda dapat menggunakan password baru Anda untuk masuk sekarang.',
+                    willClose: async () => {
+                            await fetch('/auth/logout', {
+                                method: 'POST'
+                            });
+                            window.location.href = '/auth/login';
+                        }
+                });
+            } else {
+                throw new Error(result.message || 'Terjadi kesalahan saat mengubah password.');
+            }
+        } catch (error) {
+            Swal.fire({
+                icon: 'error',
+                title: 'Oops...',
+                text: error.message || 'Terjadi kesalahan saat mengubah password. Mohon coba lagi nanti.',
+                willClose: () => {
+                            form.reset();
+                        }
+            });
+        }
+    });
+});
+    </script>
+</body>
+</html>
