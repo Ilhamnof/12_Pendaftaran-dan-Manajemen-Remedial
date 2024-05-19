@@ -7,6 +7,8 @@ const verifyTokenAndRole = require('../middleware/verifyTokenAndRole');
 router.get('/dashboard',verifyTokenAndRole('admin'), (req,res)=>{
     res.render('dashboard');
 });
-
+router.get('/ubah',verifyTokenAndRole('admin'), (req,res)=>{
+    res.render('ubahPw');
+});
 
 module.exports = router;
