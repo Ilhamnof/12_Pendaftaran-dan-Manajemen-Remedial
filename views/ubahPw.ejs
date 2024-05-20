@@ -85,7 +85,13 @@
                 Swal.fire({
                     icon: 'success',
                     title: 'Password berhasil diubah!',
-                    text: 'Anda dapat menggunakan password baru Anda untuk masuk sekarang.'
+                    text: 'Anda dapat menggunakan password baru Anda untuk masuk sekarang.',
+                    willClose: async () => {
+                            await fetch('/auth/logout', {
+                                method: 'POST'
+                            });
+                            window.location.href = '/auth/login';
+                        }
                 });
             } else {
                 throw new Error(result.message || 'Terjadi kesalahan saat mengubah password.');
@@ -94,7 +100,10 @@
             Swal.fire({
                 icon: 'error',
                 title: 'Oops...',
-                text: error.message || 'Terjadi kesalahan saat mengubah password. Mohon coba lagi nanti.'
+                text: error.message || 'Terjadi kesalahan saat mengubah password. Mohon coba lagi nanti.',
+                willClose: () => {
+                            form.reset();
+                        }
             });
         }
     });
