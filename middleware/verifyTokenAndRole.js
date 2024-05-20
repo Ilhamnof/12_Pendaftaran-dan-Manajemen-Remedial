@@ -31,6 +31,7 @@ function verifyTokenAndRole(role) {
                     return res.redirect("/admin/dashboard");
                 }
             }
+            
             next();
         });
     };

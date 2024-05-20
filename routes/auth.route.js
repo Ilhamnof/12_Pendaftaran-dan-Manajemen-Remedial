@@ -4,6 +4,7 @@ const controller = require("../controller/auth.controller");
 const verifyTokenAndRole = require("../middleware/verifyTokenAndRole");
 const beforeLogin = require("../middleware/beforeLogin");
 
+
 router.get("/login", beforeLogin, controller.form);
 router.post("/process-login", beforeLogin, controller.cekLogin);
 router.post("/logout", controller.logout);
