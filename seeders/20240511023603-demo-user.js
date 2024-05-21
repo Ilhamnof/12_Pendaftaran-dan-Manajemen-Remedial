@@ -11,16 +11,22 @@ module.exports = {
           email: "admin@gmail.com",
           password: await bcrypt.hash("123456", 10),
           role: "admin",
+          createdAt: new Date(),
+          updatedAt: new Date()
         },
         {
           email: "ilhamnofaldi@gmail.com",
           password: await bcrypt.hash("234567", 10),
           role: "mahasiswa",
+          createdAt: new Date(),
+          updatedAt: new Date()
         },
         {
           email: "dosen@gmail.com",
           password: await bcrypt.hash("345678", 10),
           role: "dosen",
+          createdAt: new Date(),
+          updatedAt: new Date()
         },
       ],
       {}

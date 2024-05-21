@@ -1,6 +1,6 @@
 const jwt = require("jsonwebtoken");
 
-function verifyTokenAndRole(role) {
+function verifyTokenAndRoles(roles = []) {
     return function (req, res, next) {
         const token = req.cookies.token;
 
@@ -22,18 +22,24 @@ function verifyTokenAndRole(role) {
 
             console.log('Token verified. User ID:', req.userId, 'Role:', req.userRole);
 
-            if (req.userRole !== role) {
-                if (req.userRole == "mahasiswa") {
+            if (roles.length && !roles.includes(req.userRole)) {
+                if (req.userRole === "mahasiswa") {
                     return res.redirect("/");
-                } else if (req.userRole == "dosen") {
+                } else if (req.userRole === "dosen") {
                     return res.redirect("/dosen/dashboard");
-                } else if (req.userRole == "admin") {
+                } else if (req.userRole === "admin") {
                     return res.redirect("/admin/dashboard");
+                } else {
+                    return res.status(403).send({
+                        auth: false,
+                        message: "Anda tidak memiliki akses untuk role ini.",
+                    });
                 }
             }
+
             next();
         });
     };
 }
 
-module.exports = verifyTokenAndRole;
+module.exports = verifyTokenAndRoles;
