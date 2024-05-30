@@ -20,19 +20,55 @@
                             <div>
                                 <label for="currentPassword" class="block text-sm mb-2">Masukkan Password</label>
                                 <div class="relative">
-                                    <input type="password" id="currentPassword" name="currentPassword" class="w-full py-3 px-4 text-sm font-medium rounded-lg border border-gray-200 bg-white text-gray-800 shadow-sm hover:bg-gray-50" required>
+                                    <input id="currentPassword" placeholder="Password" name="currentPassword" type="password" class="w-full py-3 px-4 inline-flex justify-center items-center gap-x-2 text-sm font-medium rounded-lg border border-white bg-white text-gray-800 shadow-sm hover:bg-gray-50 disabled:opacity-50 disabled:pointer-events-none" required aria-describedby="password-error">
+                                    <button type="button" data-hs-toggle-password='{
+                                        "target": "#currentPassword"
+                                    }' class="absolute top-0 end-0 p-3.5 rounded-e-md">
+                                    <svg class="flex-shrink-0 size-3.5 text-gray-400 dark:text-neutral-600" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                        <path class="hs-password-active:hidden" d="M9.88 9.88a3 3 0 1 0 4.24 4.24"></path>
+                                        <path class="hs-password-active:hidden" d="M10.73 5.08A10.43 10.43 0 0 1 12 5c7 0 10 7 10 7a13.16 13.16 0 0 1-1.67 2.68"></path>
+                                        <path class="hs-password-active:hidden" d="M6.61 6.61A13.526 13.526 0 0 0 2 12s3 7 10 7a9.74 9.74 0 0 0 5.39-1.61"></path>
+                                        <line class="hs-password-active:hidden" x1="2" x2="22" y1="2" y2="22"></line>
+                                        <path class="hidden hs-password-active:block" d="M2 12s3-7 10-7 10 7 10 7-3 7-10 7-10-7-10-7Z"></path>
+                                        <circle class="hidden hs-password-active:block" cx="12" cy="12" r="3"></circle>
+                                    </svg>
+                                    </button>
                                 </div>
                             </div>
                             <div>
                                 <label for="newPassword" class="block text-sm mb-2">Masukkan Password Baru</label>
                                 <div class="relative">
-                                    <input type="password" id="newPassword" name="newPassword" class="w-full py-3 px-4 text-sm font-medium rounded-lg border border-gray-200 bg-white text-gray-800 shadow-sm hover:bg-gray-50" required>
+                                    <input id="newPassword" placeholder="New Password" name="newPassword" type="password" class="w-full py-3 px-4 inline-flex justify-center items-center gap-x-2 text-sm font-medium rounded-lg border border-white bg-white text-gray-800 shadow-sm hover:bg-gray-50 disabled:opacity-50 disabled:pointer-events-none" required aria-describedby="password-error">
+                                    <button type="button" data-hs-toggle-password='{
+                                        "target": "#newPassword"
+                                    }' class="absolute top-0 end-0 p-3.5 rounded-e-md">
+                                    <svg class="flex-shrink-0 size-3.5 text-gray-400 dark:text-neutral-600" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                        <path class="hs-password-active:hidden" d="M9.88 9.88a3 3 0 1 0 4.24 4.24"></path>
+                                        <path class="hs-password-active:hidden" d="M10.73 5.08A10.43 10.43 0 0 1 12 5c7 0 10 7 10 7a13.16 13.16 0 0 1-1.67 2.68"></path>
+                                        <path class="hs-password-active:hidden" d="M6.61 6.61A13.526 13.526 0 0 0 2 12s3 7 10 7a9.74 9.74 0 0 0 5.39-1.61"></path>
+                                        <line class="hs-password-active:hidden" x1="2" x2="22" y1="2" y2="22"></line>
+                                        <path class="hidden hs-password-active:block" d="M2 12s3-7 10-7 10 7 10 7-3 7-10 7-10-7-10-7Z"></path>
+                                        <circle class="hidden hs-password-active:block" cx="12" cy="12" r="3"></circle>
+                                    </svg>
+                                    </button>
                                 </div>
                             </div>
                             <div>
                                 <label for="confirmPassword" class="block text-sm mb-2">Konfirmasi Password Baru</label>
                                 <div class="relative">
-                                    <input type="password" id="confirmPassword" name="confirmPassword" class="w-full mb-3 py-3 px-4 text-sm font-medium rounded-lg border border-gray-200 bg-white text-gray-800 shadow-sm hover:bg-gray-50" required>
+                                    <input id="confirmPassword" placeholder="Confirm New Password" name="confirmPassword" type="password" class="w-full py-3 px-4 inline-flex justify-center items-center gap-x-2 text-sm font-medium rounded-lg border border-white bg-white text-gray-800 shadow-sm hover:bg-gray-50 disabled:opacity-50 disabled:pointer-events-none" required aria-describedby="password-error">
+                                    <button type="button" data-hs-toggle-password='{
+                                        "target": "#confirmPassword"
+                                    }' class="absolute top-0 end-0 p-3.5 rounded-e-md">
+                                    <svg class="flex-shrink-0 size-3.5 text-gray-400 dark:text-neutral-600" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                        <path class="hs-password-active:hidden" d="M9.88 9.88a3 3 0 1 0 4.24 4.24"></path>
+                                        <path class="hs-password-active:hidden" d="M10.73 5.08A10.43 10.43 0 0 1 12 5c7 0 10 7 10 7a13.16 13.16 0 0 1-1.67 2.68"></path>
+                                        <path class="hs-password-active:hidden" d="M6.61 6.61A13.526 13.526 0 0 0 2 12s3 7 10 7a9.74 9.74 0 0 0 5.39-1.61"></path>
+                                        <line class="hs-password-active:hidden" x1="2" x2="22" y1="2" y2="22"></line>
+                                        <path class="hidden hs-password-active:block" d="M2 12s3-7 10-7 10 7 10 7-3 7-10 7-10-7-10-7Z"></path>
+                                        <circle class="hidden hs-password-active:block" cx="12" cy="12" r="3"></circle>
+                                    </svg>
+                                    </button>
                                 </div>
                             </div>
                             <button type="submit" class="w-full py-3 px-4 text-sm font-semibold rounded-lg border border-transparent bg-red-500 text-white hover:bg-red-700">Reset password</button>
@@ -44,70 +80,71 @@
     </main>
     <script>
     document.addEventListener('DOMContentLoaded', function() {
-    const form = document.querySelector('#passwordForm');
+        const form = document.querySelector('#passwordForm');
 
-    form.addEventListener('submit', async function(event) {
-        event.preventDefault();
+        form.addEventListener('submit', async function(event) {
+            event.preventDefault();
 
-        const currentPassword = document.getElementById('currentPassword').value;
-        const newPassword = document.getElementById('newPassword').value;
-        const confirmPassword = document.getElementById('confirmPassword').value;
+            const currentPassword = document.getElementsByName('currentPassword')[0].value;
+            const newPassword = document.getElementsByName('newPassword')[0].value;
+            const confirmPassword = document.getElementsByName('confirmPassword')[0].value;
 
-        // Log nilai dari form sebelum mengirim permintaan
-        console.log("Current Password:", currentPassword);
-        console.log("New Password:", newPassword);
-        console.log("Confirm Password:", confirmPassword);
+            // Log nilai dari form sebelum mengirim permintaan
+            console.log("Current Password:", currentPassword);
+            console.log("New Password:", newPassword);
+            console.log("Confirm Password:", confirmPassword);
 
-        if (newPassword !== confirmPassword) {
-            Swal.fire({
-                icon: 'error',
-                title: 'Oops...',
-                text: 'Password baru dan konfirmasi password tidak cocok. Mohon periksa kembali.'
-            });
-            return;
-        }
-
-        const formData = new FormData(form);
-        const data = new URLSearchParams(formData);
-
-        try {
-            const response = await fetch('/auth/ubahPassword', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/x-www-form-urlencoded',
-                },
-                body: data
-            });
-
-            const result = await response.json();
-
-            if (response.ok) {
+            if (newPassword !== confirmPassword) {
                 Swal.fire({
-                    icon: 'success',
-                    title: 'Password berhasil diubah!',
-                    text: 'Anda dapat menggunakan password baru Anda untuk masuk sekarang.',
-                    willClose: async () => {
-                            await fetch('/auth/logout', {
-                                method: 'POST'
-                            });
-                            window.location.href = '/auth/login';
-                        }
+                    icon: 'error',
+                    title: 'Oops...',
+                    text: 'Password baru dan konfirmasi password tidak cocok. Mohon periksa kembali.'
                 });
-            } else {
-                throw new Error(result.message || 'Terjadi kesalahan saat mengubah password.');
+                return;
             }
-        } catch (error) {
-            Swal.fire({
-                icon: 'error',
-                title: 'Oops...',
-                text: error.message || 'Terjadi kesalahan saat mengubah password. Mohon coba lagi nanti.',
-                willClose: () => {
-                            form.reset();
-                        }
-            });
-        }
+
+            const formData = new FormData(form);
+            const data = new URLSearchParams(formData);
+
+            try {
+                const response = await fetch('/auth/ubahPassword', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/x-www-form-urlencoded',
+                    },
+                    body: data
+                });
+
+                const result = await response.json();
+
+                if (response.ok) {
+                    Swal.fire({
+                        icon: 'success',
+                        title: 'Password berhasil diubah!',
+                        text: 'Anda dapat menggunakan password baru Anda untuk masuk sekarang.',
+                        willClose: async () => {
+                                await fetch('/auth/logout', {
+                                    method: 'POST'
+                                });
+                                window.location.href = '/auth/login';
+                            }
+                    });
+                } else {
+                    throw new Error(result.message || 'Terjadi kesalahan saat mengubah password.');
+                }
+            } catch (error) {
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Oops...',
+                    text: error.message || 'Terjadi kesalahan saat mengubah password. Mohon coba lagi nanti.',
+                    willClose: () => {
+                                form.reset();
+                            }
+                });
+            }
+        });
     });
-});
     </script>
+    <script src="/preline.js"></script>
 </body>
 </html>
