@@ -15,7 +15,7 @@
             res.status(500).send('Internal Server Error');
         }
     };
-    const getAllDataMahsiswa = async (req, res, next) => {
+    const getAllDataMahasiswa = async (req, res, next) => {
         try {
             const mahasiswas = await Mahasiswa.findAll();
             res.locals.mahasiswas = mahasiswas;
@@ -28,5 +28,5 @@
 
     module.exports = {
         getMahasiswaData,
-        getAllDataMahsiswa,
+        getAllDataMahasiswa,
     };

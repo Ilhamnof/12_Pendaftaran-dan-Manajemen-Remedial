@@ -1,30 +1,30 @@
 const express = require('express');
 const router = express.Router();
 const verifyTokenAndRole = require('../middleware/verifyTokenAndRole');
-const { getMahasiswaData,getAllDataMahsiswa } = require("../controller/mahasiswa.controller");
+const { getMahasiswaData,getAllDataMahasiswa } = require("../controller/mahasiswa.controller");
 
 // const controller = require('../controller/auth.controller');
 
 router.get('/dashboard',verifyTokenAndRole('admin'), (req,res)=>{
-    res.render('dashboard');
+    res.render('dashboard',{ title: 'Dashboard' });
 });
-router.get('/users',verifyTokenAndRole('admin'),getAllDataMahsiswa, (req,res)=>{
-    res.render('users');
+router.get('/users',verifyTokenAndRole('admin'),getAllDataMahasiswa, (req,res)=>{
+    res.render('users',{ title: 'Users' });
 });
 router.get('/tambah-matkul',verifyTokenAndRole('admin'), (req,res)=>{
-    res.render('tambah-matkul');
+    res.render('tambah-matkul',{ title: 'Tambah Matkul' });
 });
 router.get('/status-pendaftaran',verifyTokenAndRole('admin'), (req,res)=>{
-    res.render('status-pendaftaran');
+    res.render('status-pendaftaran',{ title: 'Status Pendaftaran' });
 });
 router.get('/pertanyaan',verifyTokenAndRole('admin'), (req,res)=>{
-    res.render('pertanyaan');
+    res.render('pertanyaan',{ title: 'Pertanyaan' });
 });
 router.get('/nilai-remedial',verifyTokenAndRole('admin'), (req,res)=>{
-    res.render('nilai-remedial');
+    res.render('nilai-remedial',{ title: 'Nilai Remedial' });
 });
 router.get('/calendar',verifyTokenAndRole('admin'), (req,res)=>{
-    res.render('calendar');
+    res.render('calendar',{ title: 'Calendar' });
 });
 router.get('/ubah',verifyTokenAndRole('admin'), (req,res)=>{
     res.render('ubahPw');
