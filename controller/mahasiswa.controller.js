@@ -1,21 +1,32 @@
-const { Mahasiswa } = require("../models");
+    const { Mahasiswa } = require("../models");
 
-const getMahasiswaData = async (req, res, next) => {
-    try {
-        // Mendapatkan informasi mahasiswa berdasarkan userID dari token
-        const mahasiswa = await Mahasiswa.findOne({ where: { userId: req.userId } });
-        if (mahasiswa) {
-            res.locals.mahasiswa = mahasiswa; // Simpan data mahasiswa di res.locals
-        } else {
-            res.locals.mahasiswa = null; // Atur null jika tidak ditemukan
+    const getMahasiswaData = async (req, res, next) => {
+        try {
+            // Mendapatkan informasi mahasiswa berdasarkan userID dari token
+            const mahasiswa = await Mahasiswa.findOne({ where: { userId: req.userId } });
+            if (mahasiswa) {
+                res.locals.mahasiswa = mahasiswa; // Simpan data mahasiswa di res.locals
+            } else {
+                res.locals.mahasiswa = null; // Atur null jika tidak ditemukan
+            }
+            next(); // Lanjutkan ke middleware berikutnya atau route handler
+        } catch (error) {
+            console.error('Error:', error);
+            res.status(500).send('Internal Server Error');
         }
-        next(); // Lanjutkan ke middleware berikutnya atau route handler
-    } catch (error) {
-        console.error('Error:', error);
-        res.status(500).send('Internal Server Error');
-    }
-};
+    };
+    const getAllDataMahsiswa = async (req, res, next) => {
+        try {
+            const mahasiswas = await Mahasiswa.findAll();
+            res.locals.mahasiswas = mahasiswas;
+            next();
+        } catch (error) {
+            console.error('Error:', error);
+            res.status(500).send('Internal Server Error');
+        }
+    };
 
-module.exports = {
-    getMahasiswaData,
-};
+    module.exports = {
+        getMahasiswaData,
+        getAllDataMahsiswa,
+    };

@@ -1,0 +1,8 @@
+<%- include ("headAdm.ejs")%>
+<div>
+    <ul>
+        <% mahasiswas.forEach(mahasiswa => { %>
+            <li><%= mahasiswa.nama %></li>
+        <% }); %>
+    </ul>
+</div>

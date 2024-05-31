@@ -6,7 +6,7 @@ const { getMahasiswaData } = require("../controller/mahasiswa.controller");
 // Home page
 router.get('/', verifyTokenAndRole('mahasiswa'), getMahasiswaData, (req, res) => {
     const mahasiswa = res.locals.mahasiswa;
-    res.render('home', { title: 'Home - Mahasiswa', mahasiswa }); // Menambahkan title
+    res.render('home', { title: 'Home', mahasiswa }); // Menambahkan title
 });
 
 // Ubah password page
@@ -16,7 +16,7 @@ router.get('/ubah', verifyTokenAndRole('mahasiswa'), (req, res) => {
 
 // Profil page
 router.get('/profil', verifyTokenAndRole('mahasiswa'), getMahasiswaData, (req, res) => {
-    res.render('profil', { title: 'Profil Mahasiswa'}); // Menambahkan title
+    res.render('profil', { title: 'Profil'}); // Menambahkan title
 });
 
 module.exports = router;
