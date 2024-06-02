@@ -1,7 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const verifyTokenAndRole = require('../middleware/verifyTokenAndRole');
-const { getMahasiswaData,getAllDataMahasiswa } = require("../controller/mahasiswa.controller");
+const { getAllDataMahasiswa,deleteMahasiswa } = require("../controller/mahasiswa.controller");
 
 // const controller = require('../controller/auth.controller');
 
@@ -29,5 +29,7 @@ router.get('/calendar',verifyTokenAndRole('admin'), (req,res)=>{
 router.get('/ubah',verifyTokenAndRole('admin'), (req,res)=>{
     res.render('ubahPw');
 });
+
+router.post('/delete', verifyTokenAndRole('admin'), deleteMahasiswa);
 
 module.exports = router;
