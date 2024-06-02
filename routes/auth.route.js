@@ -6,7 +6,7 @@ const beforeLogin = require("../middleware/beforeLogin");
 
 
 router.get("/login", beforeLogin, controller.form);
-router.post("/process-login", beforeLogin, controller.cekLogin);
+router.post("/process-login", controller.cekLogin);
 router.post("/logout", controller.logout);
 router.post("/ubahPassword", verifyTokenAndRoles(['mahasiswa', 'admin']), async (req, res) => {
     try {

@@ -13,6 +13,7 @@ module.exports = {
         hijau: "rgba(65, 144, 74, 1)",
         hijauMuda: "rgba(137, 201, 144, 1)",
         abu: "rgba(212, 210, 227, 0.40);",
+        tulang : "rgba(255, 255, 248)",
       },
     },
   },
