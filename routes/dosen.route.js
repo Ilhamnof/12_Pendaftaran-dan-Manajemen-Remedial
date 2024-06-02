@@ -4,7 +4,7 @@ const router = express.Router();
 const verifyTokenAndRole = require('../middleware/verifyTokenAndRole');
 
 router.get("/dashboard", verifyTokenAndRole('dosen'), (req, res) => {
-    res.render("dashboard");
+    res.render("headDsn");
 });
 
 module.exports = router;
