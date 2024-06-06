@@ -12,7 +12,7 @@ router.get('/users',verifyTokenAndRole('admin'),getAllDataMahasiswa, (req,res)=>
     res.render('users',{ title: 'Users' });
 });
 router.get('/tambah-matkul',verifyTokenAndRole('admin'), (req,res)=>{
-    res.render('tambah-matkul',{ title: 'Tambah Matkul' });
+    res.render('tambah-matkul',{ title: 'Tambah Mata Kuliah' });
 });
 router.get('/status-pendaftaran',verifyTokenAndRole('admin'), (req,res)=>{
     res.render('status-pendaftaran',{ title: 'Status Pendaftaran' });

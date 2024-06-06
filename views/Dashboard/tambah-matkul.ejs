@@ -1,1 +1,45 @@
-<%-include("headAdm.ejs")%>
+<%- include("headAdm.ejs") %>
+<h1 class="text-2xl text-hijau font-bold md:text-4xl md:leading-tight pt-5 pb-12"><%= title %></h1>
+
+<div class="grid md:grid-cols-2 gap-4 md:gap-8 xl:gap-20 md:items-center">
+  <!-- Kolom Kiri -->
+  <div>
+    <div class="mb-4">
+      <label class="block font-bold mb-1" for="kode">Kode Mata Kuliah</label>
+      <input class="w-full border border-gray-300 rounded px-2 py-1" type="text" id="kode" name="kode">
+    </div>
+    <div class="mb-4">
+      <label class="block font-bold mb-1" for="dosen">Dosen Pengampu</label>
+      <input class="w-full border border-gray-300 rounded px-2 py-1" type="text" id="dosen" name="dosen">
+    </div>
+    <div class="mb-4">
+      <label class="block font-bold mb-1" for="deskripsi">Deskripsi Mata Kuliah</label>
+      <textarea class="w-full border border-gray-300 rounded px-2 py-1" id="deskripsi" name="deskripsi"></textarea>
+    </div>
+
+    <button type="button" class="w-10 py-3 px-4 inline-flex justify-center items-center gap-x-2 text-sm font-semibold rounded-lg border border-transparent bg-green-600 text-white hover:bg-green-700 disabled:opacity-50 disabled:pointer-events-none">
+      Daftar Mata Kuliah
+    </button>
+  </div>
+  
+  <!-- Kolom Kanan -->
+  <div>
+    <div class="mb-4">
+      <label class="block font-bold mb-1" for="semester">Semester</label>
+      <select class="w-full border border-gray-300 rounded px-2 py-1" id="semester" name="semester">
+        <option value="">Pilih Semester</option>
+        <!-- Tambahkan opsi semester di sini -->
+      </select>
+    </div>
+    <div class="mb-4">
+      <label class="block font-bold mb-1" for="file">Upload File</label>
+      <div class="flex items-center">
+        <input class="border border-gray-300 rounded px-2 py-1" type="file" id="file" name="file">
+        <span class="ml-2 text-primary">&#9758;</span>
+      </div>
+    </div>
+    <button type="button" class="w-10 py-3 px-4 inline-flex justify-center items-center gap-x-2 text-sm font-semibold rounded-lg border border-transparent bg-green-600 text-white hover:bg-green-700 disabled:opacity-50 disabled:pointer-events-none">
+      Simpan
+    </button>
+  </div>
+</div>
