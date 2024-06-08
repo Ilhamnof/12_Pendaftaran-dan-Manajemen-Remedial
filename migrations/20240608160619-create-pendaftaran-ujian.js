@@ -1,43 +1,38 @@
 'use strict';
 module.exports = {
   up: async (queryInterface, Sequelize) => {
-    await queryInterface.createTable('Mahasiswas', {
+    await queryInterface.createTable('PendaftaranUjians', {
       id: {
         allowNull: false,
         autoIncrement: true,
         primaryKey: true,
         type: Sequelize.INTEGER
       },
-      foto_profil: {
-        type: Sequelize.STRING
-      },
-      nim: {
-        type: Sequelize.STRING
-      },
-      nama: {
-        type: Sequelize.STRING
-      },
-      prodi: {
-        type: Sequelize.STRING
-      },
-      semester: {
-        type: Sequelize.STRING
-      },
-      no_telpon: {
-        type: Sequelize.STRING
-      },
-      alamat: {
-        type: Sequelize.TEXT
-      },
-      userId: {
+      id_mahasiswa: {
         type: Sequelize.INTEGER,
         allowNull: false,
         references: {
-          model: 'Users',
+          model: 'Mahasiswas',
           key: 'id',
         },
         onUpdate: 'CASCADE',
         onDelete: 'CASCADE',
+      },
+      id_ujian: {
+        type: Sequelize.INTEGER,
+        allowNull: false,
+        references: {
+          model: 'UjianRemedials',
+          key: 'id',
+        },
+        onUpdate: 'CASCADE',
+        onDelete: 'CASCADE',
+      },
+      tanggal_pendaftaran: {
+        type: Sequelize.DATE
+      },
+      status_verifikasi: {
+        type: Sequelize.BOOLEAN
       },
       createdAt: {
         allowNull: false,
@@ -50,6 +45,6 @@ module.exports = {
     });
   },
   down: async (queryInterface, Sequelize) => {
-    await queryInterface.dropTable('Mahasiswas');
+    await queryInterface.dropTable('PendaftaranUjians');
   }
 };
