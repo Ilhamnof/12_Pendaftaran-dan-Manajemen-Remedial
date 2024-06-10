@@ -1,7 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const verifyTokenAndRole = require('../middleware/verifyTokenAndRole');
-const { getMahasiswaData } = require("../controller/mahasiswa.controller");
+const { getMahasiswaData, getAllRiwayat } = require("../controller/mahasiswa.controller");
 
 // Home page
 router.get('/', verifyTokenAndRole('mahasiswa'), getMahasiswaData, (req, res) => {
@@ -23,6 +23,9 @@ router.get('/faq', verifyTokenAndRole('mahasiswa'),getMahasiswaData, (req, res) 
 // Profil page
 router.get('/profil', verifyTokenAndRole('mahasiswa'), getMahasiswaData, (req, res) => {
     res.render('profil', { title: 'Profil'}); // Menambahkan title
+});
+router.get('/riwayat', verifyTokenAndRole('mahasiswa'),getMahasiswaData,getAllRiwayat, (req, res) => {
+    res.render('riwayat', { title: 'riwayat'}); // Menambahkan title
 });
 
 module.exports = router;

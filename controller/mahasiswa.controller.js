@@ -1,4 +1,5 @@
     const { Mahasiswa } = require("../models");
+    const { RiwayatPendaftaran, PendaftaranUjian, User } = require('../models');
 
     const getMahasiswaData = async (req, res, next) => {
         try {
@@ -25,6 +26,19 @@
             res.status(500).send('Internal Server Error');
         }
     };
+    const getAllRiwayat = async (req, res, next) => {
+        try {
+            const userId = req.userId;
+            console.log('UserID:', userId); // Debugging
+            const riwayat = await RiwayatPendaftaran.findAll();
+            console.log('Riwayat:', riwayat); // Debugging
+            res.locals.riwayat = riwayat;
+            next();
+        } catch (error) {
+            console.error('Error:', error);
+            res.status(500).send('Internal Server Error');
+        }
+    };
 
     const deleteMahasiswa = async (req, res) => {
         try {
@@ -39,5 +53,6 @@
     module.exports = {
         getMahasiswaData,
         getAllDataMahasiswa,
+        getAllRiwayat,
         deleteMahasiswa,
     };

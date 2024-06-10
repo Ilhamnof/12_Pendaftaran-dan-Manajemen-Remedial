@@ -18,6 +18,8 @@ module.exports = {
       foto_profil: null, 
       nim: `22115220${28 + index}`, 
       nama: names[index % names.length], 
+      prodi: 'Sistem Informasi', 
+      semester: 4, 
       no_telpon: `0821230941${42 + index}`,
       alamat: `Jl. Kandang Padati No.126 C`,
       userId: user.id,

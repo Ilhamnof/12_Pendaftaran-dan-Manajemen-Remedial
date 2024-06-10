@@ -11,6 +11,8 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       Mahasiswa.belongsTo(models.User, { foreignKey: 'userId', onDelete: 'CASCADE' });
+      Mahasiswa.hasMany(models.PendaftaranUjian, { foreignKey: 'id_mahasiswa', onDelete: 'CASCADE' });
+      Mahasiswa.hasMany(models.Nilai, { foreignKey: 'id_mahasiswa', onDelete: 'CASCADE' });
     }
   }
   Mahasiswa.init({
