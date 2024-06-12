@@ -1,5 +1,5 @@
     const { Mahasiswa } = require("../models");
-    const { RiwayatPendaftaran, PendaftaranUjian, User } = require('../models');
+    const { RiwayatPendaftaran, PendaftaranUjian, User,UjianRemedial } = require('../models');
 
     const getMahasiswaData = async (req, res, next) => {
         try {
@@ -30,7 +30,25 @@
         try {
             const userId = req.userId;
             console.log('UserID:', userId); // Debugging
-            const riwayat = await RiwayatPendaftaran.findAll();
+            const riwayat = await RiwayatPendaftaran.findAll({
+                include: [
+                    {
+                        model: PendaftaranUjian,
+                        as: 'pendaftaran',
+                        include: [
+                            {
+                                model: Mahasiswa,
+                                as: 'mahasiswa',
+                                where: { userId: userId } // Filter based on userId
+                            },
+                            {
+                                model: UjianRemedial,
+                                as: 'ujian',
+                            }
+                        ]
+                    }
+                ]
+            });
             console.log('Riwayat:', riwayat); // Debugging
             res.locals.riwayat = riwayat;
             next();
