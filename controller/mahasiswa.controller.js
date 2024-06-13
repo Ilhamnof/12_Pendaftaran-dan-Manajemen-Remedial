@@ -70,9 +70,16 @@
             res.status(500).send('Internal Server Error');
         }
     };
+
+    const notif = async (req,res)=>{ 
+        const user = await User.findByPk(req.userId);
+        res.render('Mahasiswa/notif', {user, page: "Notif"}); 
+    }
+
     module.exports = {
         getMahasiswaData,
         getAllDataMahasiswa,
         getAllRiwayat,
         deleteMahasiswa,
+        notif
     };

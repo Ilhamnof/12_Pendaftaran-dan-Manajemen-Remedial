@@ -27,5 +27,8 @@ router.get('/profil', verifyTokenAndRole('mahasiswa'), getMahasiswaData, (req, r
 router.get('/riwayat', verifyTokenAndRole('mahasiswa'),getMahasiswaData,getAllRiwayat, (req, res) => {
     res.render('riwayat', { title: 'riwayat'}); // Menambahkan title
 });
+router.get('/notifikasi',verifyTokenAndRole('mahasiswa'), (req,res)=>{
+    res.render('notif',{ title: 'Notifikasi' });
+});
 
 module.exports = router;
