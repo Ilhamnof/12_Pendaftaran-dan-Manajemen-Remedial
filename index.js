@@ -11,6 +11,7 @@ server.set("view engine", "ejs");
 server.set("views", [
     path.join(__dirname, "/views/Mahasiswa"),
     path.join(__dirname, "/views/Dashboard"),
+    path.join(__dirname, "/views/Dosen"),
     path.join(__dirname, "/views"),
 ]);
 server.use(express.static(path.join(__dirname, "/assets")));

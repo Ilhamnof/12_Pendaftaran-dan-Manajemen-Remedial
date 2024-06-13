@@ -11,12 +11,16 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       Mahasiswa.belongsTo(models.User, { foreignKey: 'userId', onDelete: 'CASCADE' });
+      Mahasiswa.hasMany(models.PendaftaranUjian, { foreignKey: 'id_mahasiswa', onDelete: 'CASCADE' });
+      Mahasiswa.hasMany(models.Nilai, { foreignKey: 'id_mahasiswa', onDelete: 'CASCADE' });
     }
   }
   Mahasiswa.init({
     foto_profil: DataTypes.STRING,
     nim: DataTypes.STRING,
     nama: DataTypes.STRING,
+    prodi: DataTypes.STRING,
+    semester: DataTypes.STRING,
     no_telpon: DataTypes.STRING,
     alamat: DataTypes.TEXT,
     userId: DataTypes.INTEGER

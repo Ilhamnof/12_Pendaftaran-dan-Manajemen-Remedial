@@ -16,9 +16,11 @@ module.exports = {
 
     const mahasiswaData = users[0].map((user, index) => ({
       foto_profil: null, 
-      nim: `22115220${28 + index}`,  // Contoh NIM yang berubah
-      nama: names[index % names.length], // Menggunakan nama dari array names
-      no_telpon: `0821230941${42 + index}`, // Contoh nomor telepon acak
+      nim: `22115220${28 + index}`, 
+      nama: names[index % names.length], 
+      prodi: 'Sistem Informasi', 
+      semester: 4, 
+      no_telpon: `0821230941${42 + index}`,
       alamat: `Jl. Kandang Padati No.126 C`,
       userId: user.id,
       createdAt: new Date(),

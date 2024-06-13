@@ -15,14 +15,14 @@ module.exports = {
           updatedAt: new Date()
         },
         {
-          email: "tugalan@gmail.com",
+          email: "ilhamnofaldi@gmail.com",
           password: await bcrypt.hash("123", 10),
           role: "mahasiswa",
           createdAt: new Date(),
           updatedAt: new Date()
         },
         {
-          email: "ilhamnofaldi@gmail.com",
+          email: "tugalan@gmail.com",
           password: await bcrypt.hash("123", 10),
           role: "mahasiswa",
           createdAt: new Date(),
