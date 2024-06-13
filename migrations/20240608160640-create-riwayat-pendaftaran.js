@@ -17,9 +17,6 @@ module.exports = {
         onUpdate: 'CASCADE',
         onDelete: 'CASCADE',
       },
-      tanggal_pendaftaran: {
-        type: Sequelize.DATE
-      },
       status_verifikasi: {
         type: Sequelize.BOOLEAN
       },

@@ -35,6 +35,7 @@
                     {
                         model: PendaftaranUjian,
                         as: 'pendaftaran',
+                        required : true,
                         include: [
                             {
                                 model: Mahasiswa,
@@ -44,6 +45,7 @@
                             {
                                 model: UjianRemedial,
                                 as: 'ujian',
+                                required : true,
                             }
                         ]
                     }

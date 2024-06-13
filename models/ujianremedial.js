@@ -3,7 +3,7 @@ const { Model } = require('sequelize');
 module.exports = (sequelize, DataTypes) => {
   class UjianRemedial extends Model {
     static associate(models) {
-      UjianRemedial.hasMany(models.PendaftaranUjian, { foreignKey: 'id_ujian' });
+      UjianRemedial.hasMany(models.PendaftaranUjian, { foreignKey: 'id_ujian',as: 'ujian' });
       UjianRemedial.hasMany(models.Nilai, { foreignKey: 'id_ujian' });
     }
   }

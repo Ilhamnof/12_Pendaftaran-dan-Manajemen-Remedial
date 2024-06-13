@@ -8,7 +8,6 @@ module.exports = (sequelize, DataTypes) => {
   }
   RiwayatPendaftaran.init({
     id_pendaftaran: DataTypes.INTEGER,
-    tanggal_pendaftaran: DataTypes.DATE,
     status_verifikasi: DataTypes.BOOLEAN,
     tanggal_dihapus: DataTypes.DATE
   }, {
