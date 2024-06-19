@@ -31,6 +31,9 @@ module.exports = {
       tanggal_pendaftaran: {
         type: Sequelize.DATE
       },
+      bukti_pembayaran: {
+        type: Sequelize.STRING
+      },
       status_verifikasi: {
         type: Sequelize.BOOLEAN
       },

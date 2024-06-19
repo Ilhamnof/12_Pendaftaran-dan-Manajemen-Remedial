@@ -1,5 +1,5 @@
     const { Mahasiswa } = require("../models");
-    const { RiwayatPendaftaran, PendaftaranUjian, User,UjianRemedial } = require('../models');
+    const { RiwayatPendaftaran, PendaftaranUjian, User, UjianRemedial } = require('../models');
 
     const getMahasiswaData = async (req, res, next) => {
         try {
@@ -26,6 +26,46 @@
             res.status(500).send('Internal Server Error');
         }
     };
+
+    const createPendaftaranUjian = async (req, res) => {
+        try {
+            const { id_ujian, bukti_pembayaran } = req.body;
+    
+            // Get user ID from the request (assuming it's stored in req.userId)
+    
+            // Find the mahasiswa ID based on the user ID
+            const mahasiswa = await Mahasiswa.findOne({ where: { userId: req.userId } });
+    
+            if (!mahasiswa) {
+                return res.status(404).json({
+                    message: 'Mahasiswa not found'
+                });
+            }
+    
+            const id_mahasiswa = mahasiswa.id;
+    
+            // Save to database
+            const newPendaftaran = await PendaftaranUjian.create({
+                id_mahasiswa,
+                id_ujian,
+                bukti_pembayaran,
+                tanggal_pendaftaran: new Date(),
+                status_verifikasi: false // Initial status is not verified
+            });
+    
+            res.status(201).json({
+                message: 'Pendaftaran berhasil disimpan',
+                data: newPendaftaran
+            });
+        } catch (error) {
+            console.error('Error creating pendaftaran:', error);
+            res.status(500).json({
+                message: 'Terjadi kesalahan saat menyimpan pendaftaran',
+                error
+            });
+        }
+    };
+
     const getAllRiwayat = async (req, res, next) => {
         try {
             const userId = req.userId;
@@ -81,5 +121,6 @@
         getAllDataMahasiswa,
         getAllRiwayat,
         deleteMahasiswa,
-        notif
+        notif,
+        createPendaftaranUjian,
     };

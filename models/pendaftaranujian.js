@@ -12,6 +12,7 @@ module.exports = (sequelize, DataTypes) => {
     id_mahasiswa: DataTypes.INTEGER,
     id_ujian: DataTypes.INTEGER,
     tanggal_pendaftaran: DataTypes.DATE,
+    bukti_pembayaran: DataTypes.STRING,
     status_verifikasi: DataTypes.BOOLEAN
   }, {
     sequelize,
