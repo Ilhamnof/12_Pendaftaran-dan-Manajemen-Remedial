@@ -31,6 +31,12 @@ module.exports = {
       tanggal_pendaftaran: {
         type: Sequelize.DATE
       },
+      nilai_sebelumnya: {
+        type: Sequelize.STRING
+      },
+      alasan: {
+        type: Sequelize.STRING
+      },
       bukti_pembayaran: {
         type: Sequelize.STRING
       },
