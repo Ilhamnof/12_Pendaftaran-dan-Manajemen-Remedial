@@ -1,4 +1,4 @@
-const {UjianRemedial,PendaftaranUjian,Mahasiswa} = require('../models');
+const {UjianRemedial,PendaftaranUjian,Mahasiswa,Nilai} = require('../models');
 
 const inputMatkul = async (req, res) => {
     try {
@@ -55,6 +55,40 @@ const getAllMatkul = async (req, res, next) => {
     }
 };
 
+const getAllNilai = async (req, res, next) => {
+    try {
+        const userId = req.userId;
+        const nilai = await Nilai.findAll({
+            include: [
+                {
+                    model: Mahasiswa,
+                    as: 'mahasiswa',
+                    required: true,
+                    include: [
+                        {
+                            model: PendaftaranUjian,
+                            as: 'pendaftaran',
+                            required: true,
+                            include: [
+                                {
+                                    model: UjianRemedial,
+                                    as: 'ujian',
+                                    required: true
+                                }
+                            ]
+                        }
+                    ]
+                }
+            ]
+        });
+        res.locals.nilai = nilai;
+        next();
+    } catch (error) {
+        console.error('Error:', error);
+        res.status(500).send('Internal Server Error');
+    }
+};
+
 const deletePendaftaran = async (req, res) => {
     try {
         const { id } = req.body;
@@ -73,4 +107,5 @@ module.exports = {
     getAllPendaftaran,
     deletePendaftaran,
     getAllMatkul,
+    getAllNilai,
 };

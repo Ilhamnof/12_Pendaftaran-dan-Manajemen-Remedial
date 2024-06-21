@@ -10,7 +10,7 @@ router.get("/login", beforeLogin, controller.form);
 router.post("/process-login", 
     [
     body('email').isEmail().withMessage('Email tidak valid'),
-    body('password').isLength({ min: 3 }).withMessage('Password harus memiliki minimal 6 karakter')
+    body('password').isLength({ min: 3 }).withMessage('Password harus memiliki minimal 3 karakter')
     ],
     controller.cekLogin
     );

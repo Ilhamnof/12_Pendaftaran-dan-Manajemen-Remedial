@@ -41,7 +41,9 @@ module.exports = {
         type: Sequelize.STRING
       },
       status_verifikasi: {
-        type: Sequelize.BOOLEAN
+        type: Sequelize.ENUM('diproses', 'diverifikasi', 'selesai', 'ditolak'),
+        defaultValue: 'diproses',
+        allowNull: false
       },
       createdAt: {
         allowNull: false,

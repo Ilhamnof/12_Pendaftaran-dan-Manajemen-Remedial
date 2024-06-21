@@ -2,7 +2,7 @@ const express = require('express');
 const router = express.Router();
 const verifyTokenAndRole = require('../middleware/verifyTokenAndRole');
 const { getAllDataMahasiswa,deleteMahasiswa } = require("../controller/mahasiswa.controller");
-const {inputMatkul,getAllPendaftaran,deletePendaftaran,getAllMatkul} = require("../controller/admin.controller");
+const {inputMatkul,getAllPendaftaran,deletePendaftaran,getAllMatkul,getAllNilai} = require("../controller/admin.controller");
 
 // const controller = require('../controller/auth.controller');
 
@@ -21,7 +21,7 @@ router.get('/status-pendaftaran',verifyTokenAndRole('admin'),getAllPendaftaran, 
 router.get('/pertanyaan',verifyTokenAndRole('admin'), (req,res)=>{
     res.render('pertanyaan',{ title: 'Pertanyaan' });
 });
-router.get('/nilai-remedial',verifyTokenAndRole('admin'), (req,res)=>{
+router.get('/nilai-remedial',verifyTokenAndRole('admin'),getAllNilai, (req,res)=>{
     res.render('nilai-remedial',{ title: 'Nilai Remedial' });
 });
 router.get('/calendar',verifyTokenAndRole('admin'), (req,res)=>{

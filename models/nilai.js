@@ -3,8 +3,8 @@ const { Model } = require('sequelize');
 module.exports = (sequelize, DataTypes) => {
   class Nilai extends Model {
     static associate(models) {
-      Nilai.belongsTo(models.Mahasiswa, { foreignKey: 'id_mahasiswa', onDelete: 'CASCADE' });
-      Nilai.belongsTo(models.UjianRemedial, { foreignKey: 'id_ujian', onDelete: 'CASCADE' });
+      Nilai.belongsTo(models.Mahasiswa, { foreignKey: 'id_mahasiswa',as:'mahasiswa', onDelete: 'CASCADE' });
+      Nilai.belongsTo(models.UjianRemedial, { foreignKey: 'id_ujian',as:'ujian', onDelete: 'CASCADE' });
     }
   }
   Nilai.init({

@@ -5,7 +5,7 @@ const path = require('path');
 // Konfigurasi penyimpanan dan penamaan file
 const storage = multer.diskStorage({
     destination: function (req, file, cb) {
-        cb(null, 'uploads/'); // Folder tujuan
+        cb(null, 'assets/uploads/'); // Folder tujuan
     },
     filename: function (req, file, cb) {
         const uniqueSuffix = Date.now() + '-' + Math.round(Math.random() * 1E9);
@@ -59,12 +59,11 @@ const getAllDataMahasiswa = async (req, res, next) => {
 const createPendaftaranUjian = async (req, res) => {
     try {
         const { id_ujian, nilai_sebelumnya, alasan } = req.body;
-        const bukti_pembayaran = req.file ? req.file.path : null;
+        const bukti_pembayaran = req.file ? `/uploads/${req.file.filename}` : null;
 
         // Get user ID from the request (assuming it's stored in req.userId)
         const mahasiswa = await Mahasiswa.findOne({ where: { userId: req.userId } });
         
-
         if (!bukti_pembayaran) {
             return res.status(400).json({
                 message: 'File bukti pembayaran tidak ditemukan'
@@ -80,7 +79,7 @@ const createPendaftaranUjian = async (req, res) => {
             bukti_pembayaran,
             nilai_sebelumnya,
             alasan,
-            status_verifikasi: false // Initial status is not verified
+            status_verifikasi: "diproses"
         });
 
         res.status(200).json({
