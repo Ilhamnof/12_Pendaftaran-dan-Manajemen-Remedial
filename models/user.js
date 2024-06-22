@@ -9,6 +9,8 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       User.hasOne(models.Mahasiswa, { foreignKey: 'userId', onDelete: 'CASCADE' });
+      User.hasOne(models.DosenPengampu, { foreignKey: 'userId', onDelete: 'CASCADE' });
+      User.hasOne(models.AdminFakultas, { foreignKey: 'userId', onDelete: 'CASCADE' });
     }
   }
   User.init(

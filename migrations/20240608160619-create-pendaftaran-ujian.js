@@ -32,7 +32,10 @@ module.exports = {
         type: Sequelize.DATE
       },
       nilai_sebelumnya: {
-        type: Sequelize.STRING
+        type: Sequelize.INTEGER
+      },
+      nilai: {
+        type: Sequelize.INTEGER
       },
       alasan: {
         type: Sequelize.STRING
@@ -41,7 +44,9 @@ module.exports = {
         type: Sequelize.STRING
       },
       status_verifikasi: {
-        type: Sequelize.BOOLEAN
+        type: Sequelize.ENUM('diproses', 'diverifikasi', 'selesai', 'ditolak'),
+        defaultValue: 'diproses',
+        allowNull: false
       },
       createdAt: {
         allowNull: false,

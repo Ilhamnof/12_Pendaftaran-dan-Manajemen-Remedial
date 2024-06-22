@@ -2,148 +2,223 @@
 
 <!-- Card Section -->
 <div class="max-w-4xl px-4 py-10 sm:px-6 lg:px-8 lg:py-14 mx-auto">
-    <!-- Card -->
-    <div class="rounded-xl shadow p-4 sm:p-7 bg-gray-100 mt-8">
-        <form id="pendaftaranForm">
-            <!-- Section -->
-            <div class="grid sm:grid-cols-12 gap-2 sm:gap-4 py-8 first:pt-0 last:pb-0 border-t first:border-transparent border-gray-200">
-                <div class="sm:col-span-12">
-                    <h2 class="text-lg font-semibold text-gray-800">
-                        Form Pendaftaran Ujian Remedial
-                    </h2>
-                </div>
+  <!-- Card -->
+  <div class="rounded-xl shadow p-4 sm:p-7 bg-gray-100 mt-8">
+    <form id="pendaftaranForm">
+      <!-- For Trigger UserId -->
+      <input
+        hidden
+        id="user_id"
+        name="user_id"
+        type="text"
+        value="<%=mahasiswa.id%>"
+      />
 
-                <div class="sm:col-span-3">
-                    <label for="nama_matkul" class="inline-block text-sm font-medium text-gray-500 mt-2.5">
-                        Pilih Mata Kuliah
-                    </label>
-                </div>
+      <!-- Section -->
+      <div
+        class="grid sm:grid-cols-12 gap-2 sm:gap-4 py-8 first:pt-0 last:pb-0 border-t first:border-transparent border-gray-200"
+      >
+        <div class="sm:col-span-12">
+          <h2 class="text-lg font-semibold text-gray-800">
+            Form Pendaftaran Ujian Remedial
+          </h2>
+        </div>
 
-                <div class="sm:col-span-9">
-                    <div class="sm:flex">
-                        <select id="nama_matkul" name="nama_matkul" class="py-3 px-4 pe-9 block w-full border-gray-200 rounded-lg text-sm focus:border-blue-500 focus:ring-blue-500 disabled:opacity-50 disabled:pointer-events-none" required>
-                            <option selected disabled>Pilih Salah Satu</option>
-                            <% ujian.forEach(matkul => { %>
-                                <option value="<%= matkul.id %>"><%= matkul.nama_matkul %></option>
-                            <% }) %>
-                        </select>
-                        <input type="hidden" id="id_ujian" name="id_ujian">
-                    </div>
-                </div>
+        <div class="sm:col-span-3">
+          <label
+            for="nama_matkul"
+            class="inline-block text-sm font-medium text-gray-500 mt-2.5"
+          >
+            Pilih Mata Kuliah
+          </label>
+        </div>
 
-                <div class="sm:col-span-3">
-                    <label for="nilai_sebelumnya" class="inline-block text-sm font-medium text-gray-500 mt-2.5">
-                        Nilai Sebelumnya
-                    </label>
-                </div>
+        <div class="sm:col-span-9">
+          <div class="sm:flex">
+            <select
+              id="nama_matkul"
+              name="nama_matkul"
+              class="py-3 px-4 pe-9 block w-full border-gray-200 rounded-lg text-sm focus:border-blue-500 focus:ring-blue-500 disabled:opacity-50 disabled:pointer-events-none"
+              required
+            >
+              <option selected disabled>Pilih Salah Satu</option>
+              <% ujian.forEach(matkul => { %>
+              <option value="<%= matkul.id %>">
+                <%= matkul.nama_matkul %>
+              </option>
+              <% }) %>
+            </select>
+            <input type="hidden" id="id_ujian" name="id_ujian" />
+          </div>
+        </div>
 
-                <div class="sm:col-span-9">
-                    <input id="nilai_sebelumnya" name="nilai_sebelumnya" type="text" class="py-2 px-3 pe-11 block w-full border-gray-200 shadow-sm text-sm rounded-lg focus:border-blue-500 focus:ring-blue-500 disabled:opacity-50 disabled:pointer-events-none" required>
-                </div>
+        <div class="sm:col-span-3">
+          <label
+            for="nilai_sebelumnya"
+            class="inline-block text-sm font-medium text-gray-500 mt-2.5"
+          >
+            Nilai Sebelumnya
+          </label>
+        </div>
 
-                <div class="sm:col-span-3">
-                    <div class="inline-block">
-                        <label for="bukti_pembayaran" class="inline-block text-sm font-medium text-gray-500 mt-2.5">
-                            Bukti Pembayaran
-                        </label>
-                    </div>
-                </div>
+        <div class="sm:col-span-9">
+          <input
+            id="nilai_sebelumnya"
+            name="nilai_sebelumnya"
+            type="text"
+            class="py-2 px-3 pe-11 block w-full border-gray-200 shadow-sm text-sm rounded-lg focus:border-blue-500 focus:ring-blue-500 disabled:opacity-50 disabled:pointer-events-none"
+            required
+          />
+        </div>
 
-                <div class="sm:col-span-9">
-                    <label for="bukti_pembayaran" class="sr-only">Choose file</label>
-                    <input type="file" name="bukti_pembayaran" id="bukti_pembayaran" class="bg-white block w-full border border-gray-200 shadow-sm rounded-lg text-sm focus:z-10 focus:border-blue-500 focus:ring-blue-500 disabled:opacity-50 disabled:pointer-events-none file:bg-gray-0 file:border-0 file:py-2 file:px-4" required>
-                </div>
-            </div>
+        <div class="sm:col-span-3">
+          <div class="inline-block">
+            <label
+              for="bukti_pembayaran"
+              class="inline-block text-sm font-medium text-gray-500 mt-2.5"
+            >
+              Bukti Pembayaran
+            </label>
+          </div>
+        </div>
 
-            <div class="grid sm:grid-cols-12 gap-2 sm:gap-4 py-8 first:pt-0 last:pb-0 border-t first:border-transparent border-gray-200">
-                <div class="sm:col-span-12">
-                    <h2 class="text-lg font-semibold text-gray-800">
-                        Alasan mengapa Anda perlu mengambil remedial 
-                    </h2>
-                </div>
+        <div class="sm:col-span-9">
+          <label for="bukti_pembayaran" class="sr-only">Choose file</label>
+          <input
+            type="file"
+            name="bukti_pembayaran"
+            id="bukti_pembayaran"
+            class="bg-white block w-full border border-gray-200 shadow-sm rounded-lg text-sm focus:z-10 focus:border-blue-500 focus:ring-blue-500 disabled:opacity-50 disabled:pointer-events-none file:bg-gray-0 file:border-0 file:py-2 file:px-4"
+            required
+          />
+        </div>
+      </div>
 
-                <div class="sm:col-span-9">
-                    <textarea id="alasan" name="alasan" class="py-2 px-3 block w-full border-gray-200 rounded-lg text-sm focus:border-blue-500 focus:ring-blue-500 disabled:opacity-50 disabled:pointer-events-none" rows="6" placeholder="misalnya, kurangnya pemahaman materi, ketidakhadiran, atau kesulitan belajar" required></textarea>
-                </div>
-            </div>
+      <div
+        class="grid sm:grid-cols-12 gap-2 sm:gap-4 py-8 first:pt-0 last:pb-0 border-t first:border-transparent border-gray-200"
+      >
+        <div class="sm:col-span-12">
+          <h2 class="text-lg font-semibold text-gray-800">
+            Alasan mengapa Anda perlu mengambil remedial
+          </h2>
+        </div>
 
-            <div class="py-8 first:pt-0 last:pb-0 border-t first:border-transparent border-gray-200">
-                <h2 class="text-lg font-semibold text-gray-800">
-                    Submit application
-                </h2>
+        <div class="sm:col-span-9">
+          <textarea
+            id="alasan"
+            name="alasan"
+            class="py-2 px-3 block w-full border-gray-200 rounded-lg text-sm focus:border-blue-500 focus:ring-blue-500 disabled:opacity-50 disabled:pointer-events-none"
+            rows="6"
+            placeholder="misalnya, kurangnya pemahaman materi, ketidakhadiran, atau kesulitan belajar"
+            required
+          ></textarea>
+        </div>
+      </div>
 
-                <ul class="marker:text-blue-600 ps-5 space-y-2 text-sm text-gray-600 dark:text-neutral-400 ml-2" style="list-style-type: disc">
-                    <li>Saya menyatakan bahwa semua informasi yang saya berikan dalam formulir ini adalah benar dan akurat.</li>
-                    <li>Saya bersedia mengikuti semua kegiatan remedial sesuai dengan jadwal yang telah ditentukan.</li>
-                    <li>Saya bertanggung jawab atas segala konsekuensi yang timbul dari ketidakhadiran atau ketidakmampuan saya dalam mengikuti remedial.</li>
-                </ul>
-                <div class="mt-5 flex">
-                    <input type="checkbox" class="shrink-0 mt-0.5 border-gray-300 rounded text-blue-600 focus:ring-blue-500 disabled:opacity-50 disabled:pointer-events-none" id="privacy_check" required>
-                    <label for="privacy_check" class="text-sm text-gray-500 ms-2">Saya menyetujui semua pernyataan diatas.</label>
-                </div>
-            </div>
+      <div
+        class="py-8 first:pt-0 last:pb-0 border-t first:border-transparent border-gray-200"
+      >
+        <h2 class="text-lg font-semibold text-gray-800">Submit application</h2>
 
-            <button type="submit" class="w-full py-3 px-4 inline-flex justify-center items-center gap-x-2 text-sm font-semibold rounded-lg border border-transparent bg-blue-600 text-white hover:bg-blue-700 disabled:opacity-50 disabled:pointer-events-none">
-                Submit application
-            </button>
-        </form>
-    </div>
+        <ul
+          class="marker:text-blue-600 ps-5 space-y-2 text-sm text-gray-600 dark:text-neutral-400 ml-2"
+          style="list-style-type: disc"
+        >
+          <li>
+            Saya menyatakan bahwa semua informasi yang saya berikan dalam
+            formulir ini adalah benar dan akurat.
+          </li>
+          <li>
+            Saya bersedia mengikuti semua kegiatan remedial sesuai dengan jadwal
+            yang telah ditentukan.
+          </li>
+          <li>
+            Saya bertanggung jawab atas segala konsekuensi yang timbul dari
+            ketidakhadiran atau ketidakmampuan saya dalam mengikuti remedial.
+          </li>
+        </ul>
+        <div class="mt-5 flex">
+          <input
+            type="checkbox"
+            class="shrink-0 mt-0.5 border-gray-300 rounded text-blue-600 focus:ring-blue-500 disabled:opacity-50 disabled:pointer-events-none"
+            id="privacy_check"
+            required
+          />
+          <label for="privacy_check" class="text-sm text-gray-500 ms-2"
+            >Saya menyetujui semua pernyataan diatas.</label
+          >
+        </div>
+      </div>
+
+      <button
+        type="submit"
+        class="w-full py-3 px-4 inline-flex justify-center items-center gap-x-2 text-sm font-semibold rounded-lg border border-transparent bg-blue-600 text-white hover:bg-blue-700 disabled:opacity-50 disabled:pointer-events-none"
+      >
+        Submit application
+      </button>
+    </form>
+  </div>
 </div>
 
-<%- include ("modal.ejs")%>
-<%- include ("footMhs.ejs")%>
+<%- include("modal.ejs") %> <%- include("footMhs.ejs") %>
 
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
 <script>
-document.addEventListener('DOMContentLoaded', function() {
+  document.addEventListener("DOMContentLoaded", function () {
     // Update id_ujian saat nama_matkul dipilih
-    document.getElementById('nama_matkul').addEventListener('change', function() {
+    document
+      .getElementById("nama_matkul")
+      .addEventListener("change", function () {
         const selectedUjianId = this.value;
-        document.getElementById('id_ujian').value = selectedUjianId;
-    });
+        document.getElementById("id_ujian").value = selectedUjianId;
+      });
 
     // Handle form submission
-    document.getElementById('pendaftaranForm').addEventListener('submit', function(event) {
-    event.preventDefault();
+    document
+      .getElementById("pendaftaranForm")
+      .addEventListener("submit", function (event) {
+        event.preventDefault();
 
-    const formData = new FormData(this);
-    const id_ujian = document.getElementById('nama_matkul').value;
-    formData.append('id_ujian', id_ujian);
+        const formData = new FormData(this);
+        const id_ujian = document.getElementById("nama_matkul").value;
+        const user_id = document.getElementById("user_id").value;
+        formData.append("id_ujian", id_ujian);
+        formData.append("user_id", user_id);
 
-    fetch('/pendaftaran', {
-        method: 'POST',
-        body: formData
-    })
-    .then(response => response.json())
-    .then(data => {
-        if (data.message) {
-            Swal.fire({
-                title: 'Sukses!',
+        fetch("/pendaftaran", {
+          method: "POST",
+          body: formData,
+        })
+          .then((response) => response.json())
+          .then((data) => {
+            if (data.message) {
+              Swal.fire({
+                title: "Sukses!",
                 text: data.message,
-                icon: 'success',
-                confirmButtonText: 'OK'
-            }).then(() => {
+                icon: "success",
+                confirmButtonText: "OK",
+              }).then(() => {
                 window.location.reload();
-            });
-        } else {
-            Swal.fire({
-                title: 'Error!',
+              });
+            } else {
+              Swal.fire({
+                title: "Error!",
                 text: data.message,
-                icon: 'error',
-                confirmButtonText: 'OK'
+                icon: "error",
+                confirmButtonText: "OK",
+              });
+            }
+          })
+          .catch((error) => {
+            console.error("Error:", error);
+            Swal.fire({
+              title: "Error!",
+              text: "Terjadi kesalahan saat mengirimkan formulir.",
+              icon: "error",
+              confirmButtonText: "OK",
             });
-        }
-    })
-    .catch(error => {
-        console.error('Error:', error);
-        Swal.fire({
-            title: 'Error!',
-            text: 'Terjadi kesalahan saat mengirimkan formulir.',
-            icon: 'error',
-            confirmButtonText: 'OK'
-        });
-    });
-    });
-});
+          });
+      });
+  });
 </script>
