@@ -32,7 +32,10 @@ module.exports = {
         type: Sequelize.DATE
       },
       nilai_sebelumnya: {
-        type: Sequelize.STRING
+        type: Sequelize.INTEGER
+      },
+      nilai: {
+        type: Sequelize.INTEGER
       },
       alasan: {
         type: Sequelize.STRING
