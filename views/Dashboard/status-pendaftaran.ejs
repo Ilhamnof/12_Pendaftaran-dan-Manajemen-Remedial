@@ -1,1 +1,55 @@
-<%-include("headAdm.ejs")%>
+<%- include("headAdm.ejs") %>
+<h1 class="text-2xl text-hijau font-bold md:text-4xl md:leading-tight pt-5 pb-12"><%= title %></h1>
+<!-- Table -->
+<div class="flex flex-col">
+    <div class="-m-1.5 overflow-x-auto">
+        <div class="p-1.5 min-w-full inline-block align-middle">
+            <div class="border rounded-lg overflow-hidden">
+                <table class="min-w-full divide-y divide-gray-200">
+                    <thead class="bg-gray-50">
+                        <tr>
+                            <th scope="col" class="px-6 py-3 text-start text-xs font-medium text-gray-500 uppercase">Nama Mahasiswa</th>
+                            <th scope="col" class="px-6 py-3 text-start text-xs font-medium text-gray-500 uppercase">Mata Kuliah</th>
+                            <th scope="col" class="px-6 py-3 text-start text-xs font-medium text-gray-500 uppercase">Tanggal Daftar</th>
+                            <th scope="col" class="px-6 py-3 text-start text-xs font-medium text-gray-500 uppercase">Bukti Pembayaran</th>
+                            <th scope="col" class="px-6 py-3 text-center text-xs font-medium text-gray-500 uppercase">Aksi</th>
+                        </tr>
+                    </thead>
+                    <tbody class="divide-y divide-gray-200">
+                        <% pendaftaranujians.forEach(pendaftaran => { %>
+                            <tr>
+                                <td class="px-6 py-4 whitespace-nowrap text-sm font-medium 
+                                    <% if (pendaftaran.status_verifikasi) { %>
+                                         text-green-600
+                                    <% } else { %>
+                                         text-red-600
+                                    <% } %>">
+                                <%= pendaftaran.mahasiswa.nama %>
+                                </td>
+                                <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-800"><%= pendaftaran.ujian.nama_matkul  %></td>
+                                <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-800"><%= new Date(pendaftaran.tanggal_pendaftaran).toLocaleDateString() %> <%= new Date(pendaftaran.tanggal_pendaftaran).toLocaleTimeString() %></td>
+                                <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-800 text-center">-</td> 
+                                <!-- edit this ↑↑↑ later for bukti pembayaran -->
+                                <td class="px-6 py-4 whitespace-nowrap text-center text-sm font-medium">
+                                    <a href="/admin/detail/<%= pendaftaran.id %>" style="color: white; background-color: #3B82F6; padding: 8px 16px; border-radius: 8px; text-decoration: none; display: inline-block;">Detail</a>
+                                    <form action="/admin/status-pendaftaran/approve" method="POST" class="inline-block" style="display: inline;">
+                                        <input type="hidden" name="id" value="<%= pendaftaran.id %>">
+                                        <button type="submit" style="color: white; background-color: #10B981; padding: 8px 16px; border-radius: 8px; border: none; cursor: pointer;">Terima</button>
+                                    </form>
+                                    <form action="/admin/status-pendaftaran/reject" method="POST" class="inline-block" style="display: inline;">
+                                        <input type="hidden" name="id" value="<%= pendaftaran.id %>">
+                                        <button type="submit" style="color: white; background-color: #EF4444; padding: 8px 16px; border-radius: 8px; border: none; cursor: pointer;">Tolak</button>
+                                    </form>
+                                </td>
+                            </tr>
+                        <% }) %>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- End Table -->
+<script src="/preline.js"></script>
+</body>
+</html>

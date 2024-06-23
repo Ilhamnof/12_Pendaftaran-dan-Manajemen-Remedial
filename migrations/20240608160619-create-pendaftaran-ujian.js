@@ -31,8 +31,22 @@ module.exports = {
       tanggal_pendaftaran: {
         type: Sequelize.DATE
       },
+      nilai_sebelumnya: {
+        type: Sequelize.INTEGER
+      },
+      nilai: {
+        type: Sequelize.INTEGER
+      },
+      alasan: {
+        type: Sequelize.STRING
+      },
+      bukti_pembayaran: {
+        type: Sequelize.STRING
+      },
       status_verifikasi: {
-        type: Sequelize.BOOLEAN
+        type: Sequelize.ENUM('diproses', 'diverifikasi', 'selesai', 'ditolak'),
+        defaultValue: 'diproses',
+        allowNull: false
       },
       createdAt: {
         allowNull: false,

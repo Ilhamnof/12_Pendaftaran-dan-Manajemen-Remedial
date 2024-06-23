@@ -1,7 +1,8 @@
 const express = require('express');
 const router = express.Router();
 const verifyTokenAndRole = require('../middleware/verifyTokenAndRole');
-const { getMahasiswaData, getAllRiwayat } = require("../controller/mahasiswa.controller");
+const { getMahasiswaData, getAllRiwayat, createPendaftaranUjian ,upload} = require("../controller/mahasiswa.controller");
+const {getAllMatkul} = require ("../controller/admin.controller")
 
 // Home page
 router.get('/', verifyTokenAndRole('mahasiswa'), getMahasiswaData, (req, res) => {
@@ -14,9 +15,11 @@ router.get('/ubah', verifyTokenAndRole('mahasiswa'), (req, res) => {
     res.render('ubahPw', { title: 'Ubah Password' }); // Menambahkan title
 });
 
-router.get('/formulir', verifyTokenAndRole('mahasiswa'),getMahasiswaData, (req, res) => {
+router.get('/formulir', verifyTokenAndRole('mahasiswa'),getMahasiswaData,getAllMatkul,(req, res) => {
     res.render('formulir', { title: 'Formulir' }); // Menambahkan title
 });
+router.post('/pendaftaran', verifyTokenAndRole('mahasiswa'),upload.single('bukti_pembayaran'), createPendaftaranUjian);
+
 router.get('/faq', verifyTokenAndRole('mahasiswa'),getMahasiswaData, (req, res) => {
     res.render('faq', { title: 'FaQ' }); // Menambahkan title
 });

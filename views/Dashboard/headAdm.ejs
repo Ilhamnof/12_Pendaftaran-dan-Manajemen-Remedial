@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title ><%=title%> </title>
     <link rel="stylesheet" href="/style.css">
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 </head>
 <body>
 
@@ -71,7 +72,7 @@ lg:block lg:translate-x-0 lg:end-auto lg:bottom-0">
             </a>
         </li>
         <li>
-            <a class="flex items-center gap-x-3.5 py-2 px-2.5 text-sm rounded-lg <% if(title === 'Tambah Matkul') { %> bg-hijauMuda text-white hover:bg-hijau <% } else { %> text-neutral-800 hover:bg-gray-100 <% } %>" href="/admin/tambah-matkul">
+            <a class="flex items-center gap-x-3.5 py-2 px-2.5 text-sm rounded-lg <% if(title === 'Tambah Mata Kuliah') { %> bg-hijauMuda text-white hover:bg-hijau <% } else { %> text-neutral-800 hover:bg-gray-100 <% } %>" href="/admin/tambah-matkul">
                 <svg class="flex-shrink-0 size-5" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7Z"/><path d="M14 2v4a2 2 0 0 0 2 2h4"/><path d="M9 15h6"/><path d="M12 18v-6"/></svg>
                 Tambah Mata Kuliah Remedial
             </a>

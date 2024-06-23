@@ -3,9 +3,12 @@ const express = require("express");
 const server = express();
 const path = require("path");
 const cookieParser = require("cookie-parser");
-server.use(express.json());
+const bodyParser = require('body-parser');
 
+server.use(express.json());
 server.use(cookieParser());
+server.use(bodyParser.urlencoded({ extended: true }));
+server.use(bodyParser.json());
 
 server.set("view engine", "ejs");
 server.set("views", [
@@ -22,6 +25,7 @@ const auth = require("./routes/auth.route");
 const mahasiswa = require("./routes/mahasiswa.route");
 const dosen = require("./routes/dosen.route");
 const admin = require("./routes/admin.route");
+// Middleware untuk parsing application/x-www-form-urlencoded
 
 server.use("/auth", auth);
 server.use("/", mahasiswa);

@@ -1,85 +1,229 @@
-    const { Mahasiswa } = require("../models");
-    const { RiwayatPendaftaran, PendaftaranUjian, User,UjianRemedial } = require('../models');
+const {
+  Mahasiswa,
+  PendaftaranUjian,
+  User,
+  Nilai,
+  UjianRemedial,
+  RiwayatPendaftaran,
+} = require("../models");
+const multer = require("multer");
+const path = require("path");
+const nilai = require("../models/nilai");
 
-    const getMahasiswaData = async (req, res, next) => {
-        try {
-            // Mendapatkan informasi mahasiswa berdasarkan userID dari token
-            const mahasiswa = await Mahasiswa.findOne({ where: { userId: req.userId } });
-            if (mahasiswa) {
-                res.locals.mahasiswa = mahasiswa; // Simpan data mahasiswa di res.locals
-            } else {
-                res.locals.mahasiswa = null; // Atur null jika tidak ditemukan
-            }
-            next(); // Lanjutkan ke middleware berikutnya atau route handler
-        } catch (error) {
-            console.error('Error:', error);
-            res.status(500).send('Internal Server Error');
-        }
-    };
-    const getAllDataMahasiswa = async (req, res, next) => {
-        try {
-            const mahasiswas = await Mahasiswa.findAll();
-            res.locals.mahasiswas = mahasiswas;
-            next();
-        } catch (error) {
-            console.error('Error:', error);
-            res.status(500).send('Internal Server Error');
-        }
-    };
-    const getAllRiwayat = async (req, res, next) => {
-        try {
-            const userId = req.userId;
-            console.log('UserID:', userId); // Debugging
-            const riwayat = await RiwayatPendaftaran.findAll({
-                include: [
-                    {
-                        model: PendaftaranUjian,
-                        as: 'pendaftaran',
-                        required : true,
-                        include: [
-                            {
-                                model: Mahasiswa,
-                                as: 'mahasiswa',
-                                where: { userId: userId } // Filter based on userId
-                            },
-                            {
-                                model: UjianRemedial,
-                                as: 'ujian',
-                                required : true,
-                            }
-                        ]
-                    }
-                ]
-            });
-            console.log('Riwayat:', riwayat); // Debugging
-            res.locals.riwayat = riwayat;
-            next();
-        } catch (error) {
-            console.error('Error:', error);
-            res.status(500).send('Internal Server Error');
-        }
-    };
+// Konfigurasi penyimpanan dan penamaan file
+const storage = multer.diskStorage({
+  destination: function (req, file, cb) {
+    cb(null, "uploads/"); // Folder tujuan
+  },
+  filename: function (req, file, cb) {
+    const uniqueSuffix = Date.now() + "-" + Math.round(Math.random() * 1e9);
+    cb(null, uniqueSuffix + "-" + file.originalname);
+  },
+});
 
-    const deleteMahasiswa = async (req, res) => {
-        try {
-            const { id } = req.body;
-            await Mahasiswa.destroy({ where: { id } });
-            res.redirect('/admin/users'); // Mengarahkan kembali ke halaman yang sesuai setelah penghapusan
-        } catch (error) {
-            console.error('Error:', error);
-            res.status(500).send('Internal Server Error');
-        }
-    };
+// Filter file untuk tipe tertentu
+const fileFilter = (req, file, cb) => {
+  if (
+    file.mimetype === "image/jpeg" ||
+    file.mimetype === "image/png" ||
+    file.mimetype === "application/pdf"
+  ) {
+    cb(null, true);
+  } else {
+    cb(
+      new Error("Invalid file type, only JPEG, PNG, and PDF is allowed!"),
+      false
+    );
+  }
+};
 
-    const notif = async (req,res)=>{ 
-        const user = await User.findByPk(req.userId);
-        res.render('Mahasiswa/notif', {user, page: "Notif"}); 
+// Konfigurasi multer
+const upload = multer({
+  storage: storage,
+  limits: {
+    fileSize: 1024 * 1024 * 5, // Ukuran file maksimum 5MB
+  },
+  fileFilter: fileFilter,
+});
+
+// Middleware untuk mendapatkan data mahasiswa
+const getMahasiswaData = async (req, res, next) => {
+  try {
+    const mahasiswa = await Mahasiswa.findOne({
+      where: { userId: req.userId },
+    });
+    res.locals.mahasiswa = mahasiswa || null;
+    next();
+  } catch (error) {
+    console.error("Error:", error);
+    res.status(500).send("Internal Server Error");
+  }
+};
+
+// Middleware untuk mendapatkan semua data mahasiswa
+const getAllDataMahasiswa = async (req, res, next) => {
+  try {
+    const mahasiswas = await Mahasiswa.findAll();
+    res.locals.mahasiswas = mahasiswas;
+    next();
+  } catch (error) {
+    console.error("Error:", error);
+    res.status(500).send("Internal Server Error");
+  }
+};
+
+// Fungsi untuk membuat pendaftaran ujian
+const createPendaftaranUjian = async (req, res) => {
+  try {
+    const { id_ujian, user_id, nilai_sebelumnya, alasan } = req.body;
+    const bukti_pembayaran = req.file ? req.file.path : null;
+
+    if (!bukti_pembayaran) {
+      return res.status(400).json({
+        message: "File bukti pembayaran tidak ditemukan",
+      });
+    }
+    
+    //Path Bukti Pembayaran
+    console.log(bukti_pembayaran)
+
+    const id_mahasiswa = user_id[0];
+
+    const newPendaftaran = await PendaftaranUjian.create({
+      id_mahasiswa: id_mahasiswa,
+      id_ujian: id_ujian,
+      nilai_sebelumnya:nilai_sebelumnya,
+      tanggal_pendaftaran: new Date(),
+      status_verifikasi: 0, // Initial status is not verified
+      alasan: alasan
+    });
+
+    res.status(200).json({
+      message: "Pendaftaran berhasil disimpan",
+      data: newPendaftaran,
+    });
+  } catch (error) {
+    console.error("Error creating pendaftaran:", error);
+    res.status(500).json({
+      message: "Terjadi kesalahan saat menyimpan pendaftaran",
+      error,
+    });
+  }
+};
+
+// Middleware untuk mendapatkan riwayat pendaftaran
+const getAllRiwayat = async (req, res, next) => {
+  try {
+    const userId = req.userId;
+    const riwayat = await RiwayatPendaftaran.findAll({
+      include: [
+        {
+          model: PendaftaranUjian,
+          as: "pendaftaran",
+          required: true,
+          include: [
+            { model: Mahasiswa, as: "mahasiswa", where: { userId: userId } },
+            { model: UjianRemedial, as: "ujian", required: true },
+          ],
+        },
+      ],
+    });
+    res.locals.riwayat = riwayat;
+    next();
+  } catch (error) {
+    console.error("Error:", error);
+    res.status(500).send("Internal Server Error");
+  }
+};
+
+// Fungsi untuk menghapus mahasiswa
+const deleteMahasiswa = async (req, res) => {
+  try {
+    const { id } = req.body;
+    await Mahasiswa.destroy({ where: { id } });
+    res.redirect("/admin/users"); // Redirect setelah penghapusan
+  } catch (error) {
+    console.error("Error:", error);
+    res.status(500).send("Internal Server Error");
+  }
+};
+
+// Fungsi untuk notifikasi
+const notif = async (req, res) => {
+  const user = await User.findByPk(req.userId);
+  res.render("Mahasiswa/notif", { user, page: "Notif" });
+};
+
+const tambahNilaiMahasiswa = async (req, res) => {
+  try {
+    const { mahasiswaId, nilai } = req.body;
+
+    // console.log("duuarr ", req.body);
+
+    if (!mahasiswaId || !nilai) {
+      return res.status(400).json({ message: "Mahasiswa ID dan nilai wajib diisi" });
     }
 
-    module.exports = {
-        getMahasiswaData,
-        getAllDataMahasiswa,
-        getAllRiwayat,
-        deleteMahasiswa,
-        notif
-    };
+    const pendaftaran = await PendaftaranUjian.findOne({
+      where: { id: mahasiswaId }    });
+
+    if (!pendaftaran) {
+      return res.status(404).json({ message: "Pendaftaran mahasiswa tidak ditemukan" });
+    }
+
+    pendaftaran.nilai = nilai;
+    await pendaftaran.save();
+
+    res.status(200).json({ message: "Nilai berhasil diperbarui", data: pendaftaran });
+  } catch (error) {
+    console.error("Error updating nilai:", error);
+    res.status(500).json({ message: "Terjadi kesalahan", error });
+  }
+};
+
+
+const getAllNilai = async (req, res, next) => {
+  try {
+    const userId = req.userId;
+    const nilais = await Nilai.findAll({
+      include: [
+        {
+          model: Mahasiswa,
+          attributes: ['nama', 'nim'], // Tambahkan atribut yang ingin Anda tampilkan
+        }
+      ],
+    });
+    res.locals.nilais = nilais;
+    next();
+  } catch (error) {
+    console.error("Error:", error);
+    res.status(500).send("Internal Server Error");
+  }
+};
+
+const updateVerifikasi = async (req, res) => {
+  try {
+    await PendaftaranUjian.update(
+      { status_verifikasi: true },
+      { where: { status_verifikasi: false } }
+    );
+    res.status(200).json({ message: 'Status verifikasi berhasil diperbarui' });
+  } catch (error) {
+    console.error("Error:", error);
+    res.status(500).json({ message: 'Terjadi kesalahan pada server' });
+  }
+};
+
+
+module.exports = {
+  getMahasiswaData,
+  getAllDataMahasiswa,
+  getAllRiwayat,
+  deleteMahasiswa,
+  notif,
+  createPendaftaranUjian,
+  upload,
+  tambahNilaiMahasiswa,
+  getAllNilai,
+  updateVerifikasi,  
+};

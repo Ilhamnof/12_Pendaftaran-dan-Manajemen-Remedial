@@ -1,0 +1,104 @@
+<%- include("headDsn.ejs") %>
+
+<div class="w-auto pt-0 px-4 sm:px-6 md:px-8 lg:ps-72">
+  <h1 class="text-2xl text-hijau font-bold md:text-4xl md:leading-tight pt-5 pb-12">Nilai Mahasiswa</h1>
+  
+  <!-- Form Section -->
+  <form id="nilaiForm">
+    <!-- Nama Field -->
+    <div class="mb-4">
+      <label for="nama" class="block text-sm font-medium text-gray-700">Nama</label>
+      <select id="nama" name="mahasiswaId" class="mt-1 p-2 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md" onchange="updateFields()">
+        <option value="">Select Nama</option>
+        <% pendaftaranujians.forEach(mahasiswa => { %>
+          <option value="<%= mahasiswa.id %>" data-nim="<%= mahasiswa.mahasiswa.nim %>"><%= mahasiswa.mahasiswa.nama %> | <%= mahasiswa.ujian.nama_matkul %> | <%= mahasiswa.nilai_sebelumnya %></option>
+        <% }) %>
+      </select>
+    </div>
+    
+    <!-- NIM Field -->
+    <div class="mb-4">
+      <label for="nim" class="block text-sm font-medium text-gray-700">NIM</label>
+      <input type="text" id="nim" class="mt-1 p-2 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md" readonly>
+    </div>
+    
+    <!-- Nilai Field -->
+    <div class="mb-4">
+      <label for="nilai" class="block text-sm font-medium text-gray-700">Nilai</label>
+      <input type="text" name="nilai" id="nilai" class="mt-1 p-2 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md">
+    </div>
+    
+    <!-- Buttons -->
+    <div class="flex justify-center">
+      <button type="button" onclick="submitForm()" class="bg-green-600 text-white font-semibold py-2 px-6 rounded-full hover:bg-green-700" style="
+    margin-right: 20px;">Input</button>
+      <button type="button" onclick="goToRekap()" class="bg-green-600 text-white font-semibold py-2 px-6 rounded-full hover:bg-green-700">Rekap</button>
+    </div>
+  </form>
+</div>
+
+<script>
+  function updateFields() {
+    const namaSelect = document.getElementById('nama');
+    console.log(namaSelect)
+    const nimInput = document.getElementById('nim');
+
+    const selectedOption = namaSelect.options[namaSelect.selectedIndex];
+    const selectedNim = selectedOption.getAttribute('data-nim');
+
+    nimInput.value = selectedNim;
+  }
+
+  async function submitForm() {
+    const form = document.getElementById('nilaiForm');
+    const formData = new FormData(form);
+    const plainFormData = Object.fromEntries(formData.entries());
+    const jsonFormData = JSON.stringify(plainFormData);
+
+    try {
+      const response = await fetch('/dosen/tambah-nilai-mahasiswa', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: jsonFormData,
+      });
+
+      if (response.ok) {
+        Swal.fire({
+          title: 'Success!',
+          text: 'Nilai Berhasil Ditambahkan',
+          icon: 'success',
+          confirmButtonText: 'OK'
+        }).then(() => {
+          // Optionally reload or redirect
+          window.location.reload();
+        });
+      } else {
+        const errorData = await response.json();
+        Swal.fire({
+          title: 'Error!',
+          text: errorData.message,
+          icon: 'error',
+          confirmButtonText: 'OK'
+        });
+      }
+    } catch (error) {
+      Swal.fire({
+        title: 'Error!',
+        text: 'There was an error submitting the form.',
+        icon: 'error',
+        confirmButtonText: 'OK'
+      });
+    }
+  }
+
+  function goToRekap() {
+    window.location.href = '/dosen/rekap';
+  }
+</script>
+
+<script src="/preline.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+</body>
+</html>
