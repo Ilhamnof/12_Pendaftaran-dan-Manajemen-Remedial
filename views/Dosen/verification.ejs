@@ -1,0 +1,38 @@
+<%- include("headDsn.ejs") %>
+
+<div class="w-auto pt-0 px-4 sm:px-6 md:px-8 lg:ps-72">
+  <h1 class="text-2xl text-hijau font-bold md:text-4xl md:leading-tight pt-5 pb-12">Nilai Mahasiswa</h1>
+  
+  <!-- Table Section -->
+  <table class="min-w-full divide-y divide-gray-200">
+    <thead>
+      <tr>
+        <th>No</th>
+        <th>Nama</th>
+        <th>NIM</th>
+        <th>Nilai</th>
+        <th>Status</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% pendaftaranujians.forEach((mahasiswa, index) => { %>
+        <tr>
+            <td class="py-2 px-4 text-center"><%= index + 1 %></td>
+            <td class="py-2 px-4"><%= mahasiswa.mahasiswa.nama %></td>
+            <td class="py-2 px-4 text-center"><%= mahasiswa.mahasiswa.nim %></td>
+            <td class="py-2 px-4 text-center"><%= mahasiswa.nilai || '--' %></td>
+            <td class="py-2 px-4 text-center"><%= mahasiswa.status_verifikasi ? "Verification" : '--' %></td>
+        </tr>
+      <% }) %>
+    </tbody>
+  </table>
+  
+  <!-- Buttons -->
+  <div class="flex justify-start mt-4">
+    <button onclick="window.location.href='/dosen/nilai-remedial'" class="bg-green-600 text-white font-semibold py-2 px-4 rounded hover:bg-green-700">OK</button>
+  </div>
+</div>
+
+<script src="/preline.js"></script>
+</body>
+</html>

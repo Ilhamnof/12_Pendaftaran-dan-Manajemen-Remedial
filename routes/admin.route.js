@@ -2,9 +2,8 @@ const express = require('express');
 const router = express.Router();
 const verifyTokenAndRole = require('../middleware/verifyTokenAndRole');
 const { getAllDataMahasiswa,deleteMahasiswa } = require("../controller/mahasiswa.controller");
-const {inputMatkul,getAllPendaftaran,deletePendaftaran,getAllMatkul} = require("../controller/admin.controller");
+const {inputMatkul, getAllPendaftaran, deletePendaftaran, getAllMatkul, getAllStatusPendaftaran, approvePendaftaran, rejectPendaftaran, } = require("../controller/admin.controller");
 const PendaftaranUjian = require('../models');
-
 // const controller = require('../controller/auth.controller');
 
 router.get('/dashboard',verifyTokenAndRole('admin'),getAllMatkul, (req,res)=>{
@@ -16,7 +15,7 @@ router.get('/users',verifyTokenAndRole('admin'),getAllDataMahasiswa, (req,res)=>
 router.get('/tambah-matkul',verifyTokenAndRole('admin'), (req,res)=>{
     res.render('tambah-matkul',{ title: 'Tambah Mata Kuliah' });
 });
-router.get('/status-pendaftaran',verifyTokenAndRole('admin'),getAllPendaftaran, (req,res)=>{
+router.get('/status-pendaftaran',verifyTokenAndRole('admin'),getAllStatusPendaftaran, (req,res)=>{
     res.render('status-pendaftaran',{ title: 'Status Pendaftaran' });
 });
 router.get('/pertanyaan',verifyTokenAndRole('admin'), (req,res)=>{
@@ -38,6 +37,9 @@ router.post('/deletePendaftaran', verifyTokenAndRole('admin'), deletePendaftaran
 router.post('/tambah-matkul',inputMatkul, (req,res)=>{
     res.redirect('/admin/tambah-matkul');
 });
+router.post('/status-pendaftaran/approve',verifyTokenAndRole('admin'), approvePendaftaran);
+router.post('/status-pendaftaran/reject',verifyTokenAndRole('admin'), rejectPendaftaran);
+
 
 router.post('/addNilai', async (req, res) => {
     try {

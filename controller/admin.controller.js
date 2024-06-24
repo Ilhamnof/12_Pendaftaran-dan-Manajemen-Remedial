@@ -67,7 +67,52 @@ const deletePendaftaran = async (req, res) => {
     }
 };
 
+const getAllStatusPendaftaran = async (req, res, next) => {
+    try {
+      const pendaftaranujians = await PendaftaranUjian.findAll({
+        include: [
+          { model: Mahasiswa, as: "mahasiswa" },
+          { model: UjianRemedial, as: "ujian" }
+        ],
+      });
 
+      console.log(pendaftaranujians)
+      res.locals.pendaftaranujians = pendaftaranujians;
+      next();
+    } catch (error) {
+      console.error("Error:", error);
+      res.status(500).send("Internal Server Error");
+    }
+  };
+
+  const approvePendaftaran = async (req, res, next) => {
+    try {
+      const id = req.body.id;
+      // console.log("dduuuarrr :", id)
+      await PendaftaranUjian.update(
+        { status_verifikasi: true },
+        { where: { id: id } }
+      );
+      res.redirect("/admin/status-pendaftaran");
+    } catch (error) {
+      console.error(error);
+      res.status(500).send("Internal Server Error");
+    }
+  };
+  
+  const rejectPendaftaran = async (req, res, next) => {
+    try {
+      const id = req.body.id;
+      await PendaftaranUjian.update(
+        { status_verifikasi: false },
+        { where: { id: id } }
+      );
+      res.redirect("/admin/status-pendaftaran");
+    } catch (error) {
+      console.error(error);
+      res.status(500).send("Internal Server Error");
+    }
+  };
 
 
 module.exports = {
@@ -75,4 +120,7 @@ module.exports = {
     getAllPendaftaran,
     deletePendaftaran,
     getAllMatkul,
+    getAllStatusPendaftaran,
+    approvePendaftaran,
+    rejectPendaftaran,
 };
