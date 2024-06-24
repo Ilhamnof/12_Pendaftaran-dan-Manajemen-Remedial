@@ -10,7 +10,7 @@ const form = (req, res) => {
 const cekLogin = async (req, res) => {
     const { email, password } = req.body;
 
-    // Validasi request
+    
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
         const errorMessages = errors.array().map(error => error.msg);
@@ -36,7 +36,7 @@ const cekLogin = async (req, res) => {
 
         res.cookie("token", token, { httpOnly: true });
 
-        // Redirect ke halaman sesuai dengan peran pengguna
+        
         if (user.role == "mahasiswa") {
             return res.redirect("/");
         } else if (user.role == "dosen") {

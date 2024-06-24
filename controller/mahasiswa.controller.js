@@ -8,10 +8,10 @@ const {
 } = require("../models");
 const multer = require("multer");
 
-// Konfigurasi penyimpanan dan penamaan file
+
 const storage = multer.diskStorage({
     destination: function (req, file, cb) {
-        cb(null, 'assets/uploads/'); // Folder tujuan
+        cb(null, 'assets/uploads/'); 
     },
     filename: function (req, file, cb) {
         const uniqueSuffix = Date.now() + '-' + Math.round(Math.random() * 1E9);
@@ -19,7 +19,7 @@ const storage = multer.diskStorage({
     }
 });
 
-// Filter file untuk tipe tertentu
+
 const fileFilter = (req, file, cb) => {
   if (
     file.mimetype === "image/jpeg" ||
@@ -35,16 +35,16 @@ const fileFilter = (req, file, cb) => {
   }
 };
 
-// Konfigurasi multer
+
 const upload = multer({
   storage: storage,
   limits: {
-    fileSize: 1024 * 1024 * 5, // Ukuran file maksimum 5MB
+    fileSize: 1024 * 1024 * 5, 
   },
   fileFilter: fileFilter,
 });
 
-// Middleware untuk mendapatkan data mahasiswa
+
 const getMahasiswaData = async (req, res, next) => {
   try {
     const mahasiswa = await Mahasiswa.findOne({
@@ -58,7 +58,7 @@ const getMahasiswaData = async (req, res, next) => {
   }
 };
 
-// Middleware untuk mendapatkan semua data mahasiswa
+
 const getAllDataMahasiswa = async (req, res, next) => {
   try {
     const mahasiswas = await Mahasiswa.findAll();
@@ -70,13 +70,13 @@ const getAllDataMahasiswa = async (req, res, next) => {
   }
 };
 
-// Fungsi untuk membuat pendaftaran ujian
+
 const createPendaftaranUjian = async (req, res) => {
     try {
         const { id_ujian, nilai_sebelumnya, alasan } = req.body;
         const bukti_pembayaran = req.file ? `/uploads/${req.file.filename}` : null;
 
-        // Get user ID from the request (assuming it's stored in req.userId)
+        
         const mahasiswa = await Mahasiswa.findOne({ where: { userId: req.userId } });
         
         if (!bukti_pembayaran) {
@@ -110,7 +110,7 @@ const createPendaftaranUjian = async (req, res) => {
   }
 };
 
-// Middleware untuk mendapatkan riwayat pendaftaran
+
 const getAllRiwayat = async (req, res, next) => {
   try {
     const userId = req.userId;
@@ -135,19 +135,19 @@ const getAllRiwayat = async (req, res, next) => {
   }
 };
 
-// Fungsi untuk menghapus mahasiswa
+
 const deleteMahasiswa = async (req, res) => {
   try {
     const { id } = req.body;
     await Mahasiswa.destroy({ where: { id } });
-    res.redirect("/admin/users"); // Redirect setelah penghapusan
+    res.redirect("/admin/users"); 
   } catch (error) {
     console.error("Error:", error);
     res.status(500).send("Internal Server Error");
   }
 };
 
-// Fungsi untuk notifikasi
+
 const notif = async (req, res) => {
   const user = await User.findByPk(req.userId);
   res.render("Mahasiswa/notif", { user, page: "Notif" });
@@ -157,7 +157,7 @@ const tambahNilaiMahasiswa = async (req, res) => {
   try {
     const { mahasiswaId, nilai } = req.body;
 
-    // console.log("duuarr ", req.body);
+    
 
     if (!mahasiswaId || !nilai) {
       return res.status(400).json({ message: "Mahasiswa ID dan nilai wajib diisi" });
@@ -188,7 +188,7 @@ const getAllNilai = async (req, res, next) => {
       include: [
         {
           model: Mahasiswa,
-          attributes: ['nama', 'nim'], // Tambahkan atribut yang ingin Anda tampilkan
+          attributes: ['nama', 'nim'], 
         }
       ],
     });

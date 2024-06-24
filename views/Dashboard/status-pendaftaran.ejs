@@ -26,7 +26,7 @@
                                 <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-800"><%= status.ujian.nama_matkul %></td>
                                 <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-800"><%= status.tanggal_pendaftaran.toLocaleDateString() %></td>
                                 <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-800"><%= status.nilai_sebelumnya %></td>
-                                <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-800"><%= status.alasan %></td>
+                                <td class="px-6 py-4 whitespace-wrap text-sm font-medium text-gray-800"><%= status.alasan %></td>
                                 <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-800"><img class="w-24 h-auto" src="<%= status.bukti_pembayaran %>" alt="Maria"></td>
                                 <td class="px-6 py-4 whitespace-nowrap text-center text-sm font-medium">
                                     <form action="/admin/deletePendaftaran" method="POST" onsubmit="return confirm('Are you sure you want to delete this mahasiswa?');">

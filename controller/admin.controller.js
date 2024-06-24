@@ -18,7 +18,7 @@ const inputMatkul = async (req, res) => {
 const getAllPendaftaran = async (req, res, next) => {
     try {
         const userId = req.userId;
-        console.log('UserID:', userId); // Debugging
+        console.log('UserID:', userId);
         const pendaftaran = await PendaftaranUjian.findAll({
             include: [
                 {
@@ -33,7 +33,7 @@ const getAllPendaftaran = async (req, res, next) => {
                 }
             ]    
         });
-        console.log('Riwayat:', pendaftaran); // Debugging
+        console.log('Riwayat:', pendaftaran); 
         res.locals.pendaftaran = pendaftaran;
         next();
     } catch (error) {
@@ -44,9 +44,9 @@ const getAllPendaftaran = async (req, res, next) => {
 const getAllMatkul = async (req, res, next) => {
     try {
         const userId = req.userId;
-        console.log('UserID:', userId); // Debugging
+        console.log('UserID:', userId); 
         const ujian = await UjianRemedial.findAll();
-        console.log('Riwayat:', ujian); // Debugging
+        console.log('Riwayat:', ujian); 
         res.locals.ujian = ujian;
         next();
     } catch (error) {
@@ -60,7 +60,7 @@ const deletePendaftaran = async (req, res) => {
     try {
         const { id } = req.body;
         await PendaftaranUjian.destroy({ where: { id } });
-        res.redirect('/admin/dashboard'); // Mengarahkan kembali ke halaman yang sesuai setelah penghapusan
+        res.redirect('/admin/dashboard');
     } catch (error) {
         console.error('Error:', error);
         res.status(500).send('Internal Server Error');
@@ -88,7 +88,6 @@ const getAllStatusPendaftaran = async (req, res, next) => {
   const approvePendaftaran = async (req, res, next) => {
     try {
       const id = req.body.id;
-      // console.log("dduuuarrr :", id)
       await PendaftaranUjian.update(
         { status_verifikasi: true },
         { where: { id: id } }

@@ -4,21 +4,21 @@ const { Mahasiswa, UjianRemedial, PendaftaranUjian } = require("../models");
 const updateNilai = async (req, res) => {
     try {
         const nilaiBaru = req.body.nilaiBaru;
-        console.log('Nilai Baru:', nilaiBaru); // Log nilaiBaru untuk memeriksa data
+        console.log('Nilai Baru:', nilaiBaru); 
         const id = req.body.idnilai;
-        console.log('ID:', id); // Log id untuk memeriksa data
-        // Loop untuk memperbarui nilai-nilai
+        console.log('ID:', id); 
+        
         for (const id in nilaiBaru) {
             if (nilaiBaru.hasOwnProperty(id)) {
-                console.log(`Updating ID: ${id}, New Value: ${nilaiBaru[id]}`); // Log setiap pembaruan
+                console.log(`Updating ID: ${id}, New Value: ${nilaiBaru[id]}`); 
                 await PendaftaranUjian.update(
                     { nilai: nilaiBaru[id] },
-                    { where: { id: parseInt(id) } } // Pastikan id di-parse sebagai integer
+                    { where: { id: parseInt(id) } } 
                 );
             }
         }
 
-        res.redirect('/'); // Redirect ke halaman yang sesuai setelah pembaruan
+        res.redirect('/'); 
     } catch (error) {
         console.error('Error updating nilai:', error);
         res.status(500).send({ success: false, message: 'Error updating nilai', error });
@@ -29,13 +29,13 @@ const generate = async (req, res) => {
     try {
         const doc = new PDFDocument({ margin: 50 });
 
-        // Set response headers
+        
         res.setHeader('Content-Type', 'application/pdf');
         res.setHeader('Content-Disposition', 'attachment; filename=nilai_akhir_remedial.pdf');
 
         doc.pipe(res);
 
-        // Add header
+        
         doc.fontSize(12).font('Times-Bold').text('Nilai Akhir Remedial', { align: 'center' });
         doc.fontSize(12).font('Times-Bold').text('Mata Kuliah Pemrograman Berorientasi Objek', { align: 'center' });
         doc.fontSize(12).font('Times-Bold').text('Departemen Sistem Informasi', { align: 'center' });
@@ -43,13 +43,13 @@ const generate = async (req, res) => {
 
         doc.moveDown(2);
 
-        // Create table
+        
         const table = {
             headers: ['NIM', 'Nama', 'Prodi', 'Mata Kuliah', 'Nilai Lama', 'Nilai Baru'],
             rows: []
         };
 
-        // Fetch data from database
+        
         const pendaftaran = await PendaftaranUjian.findAll({
             include: [
                 {
@@ -65,7 +65,7 @@ const generate = async (req, res) => {
             ]    
         });
 
-        // Populate table rows
+        
         pendaftaran.forEach((status) => {
             table.rows.push([
                 status.mahasiswa.nim,
@@ -77,10 +77,10 @@ const generate = async (req, res) => {
             ]);
         });
 
-        // Draw the table
+        
         drawTable(doc, table);
 
-        // Finalize the PDF and end the stream
+        
         doc.end();
     }
     catch (error) {
@@ -89,7 +89,7 @@ const generate = async (req, res) => {
     }
 };
 
-// Helper function to draw the table
+
 function drawTable(doc, table) {
     const startX = 50;
     let startY = 150;
@@ -97,7 +97,7 @@ function drawTable(doc, table) {
     const colWidths = [80, 120, 90, 90, 65, 65];
     const tableWidth = colWidths.reduce((sum, width) => sum + width, 0);
 
-    // Draw headers
+    
     doc.font('Times-Bold');
     doc.fontSize(11);
     table.headers.forEach((header, i) => {
@@ -109,7 +109,7 @@ function drawTable(doc, table) {
         });
     });
 
-    // Draw rows
+    
     doc.font('Times-Roman');
     doc.fontSize(11);
     table.rows.forEach((row, rowIndex) => {
@@ -124,7 +124,7 @@ function drawTable(doc, table) {
         });
     });
 
-    // Draw bottom line of the table
+    
     doc.moveTo(startX, startY + rowHeight)
     .lineTo(startX + tableWidth, startY + rowHeight)
     .stroke();
@@ -141,30 +141,30 @@ function drawTable(doc, table) {
 }
 
 
-// const updateNilai = async (req, res) => {
-//     try {
-//         const update = [];
 
-//         for (let key in req.body) {
-//             if (key.startsWith('nilaiBaru')) {
-//                 const id = key.split('_')[1];
-//                 const newValue = req.body[key];
 
-//                 update.push({ id, value: newValue });
 
-//                 // Corrected update call
-//                 await PendaftaranUjian.update(
-//                     { value: newValue },
-//                     { where: { id } }
-//                 );
-//             }
-//         }
 
-//         res.status(200).send({ success: true, message: 'Nilai updated successfully' });
-//     } catch (error) {
-//         console.error('Error updating nilai:', error);
-//         res.status(500).send({ success: false, message: 'Error updating nilai', error });
-//     }
-// };
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 module.exports = { updateNilai,generate };

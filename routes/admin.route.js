@@ -15,7 +15,7 @@ router.get('/users',verifyTokenAndRole('admin'),getAllDataMahasiswa, (req,res)=>
 router.get('/tambah-matkul',verifyTokenAndRole('admin'), (req,res)=>{
     res.render('tambah-matkul',{ title: 'Tambah Mata Kuliah' });
 });
-router.get('/status-pendaftaran',verifyTokenAndRole('admin'),getAllStatusPendaftaran, (req,res)=>{
+router.get('/status-pendaftaran',verifyTokenAndRole('admin'),getAllPendaftaran, (req,res)=>{
     res.render('status-pendaftaran',{ title: 'Status Pendaftaran' });
 });
 router.get('/pertanyaan',verifyTokenAndRole('admin'), (req,res)=>{

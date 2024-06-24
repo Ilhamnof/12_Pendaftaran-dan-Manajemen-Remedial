@@ -6,7 +6,7 @@ const { updateNilai, generate } = require("../controller/dosen.controller");
 const { getAllDataMahasiswa, tambahNilaiMahasiswa, getAllNilai, updateVerifikasi  } = require("../controller/mahasiswa.controller");
 
 router.get("/dashboard", verifyTokenAndRole('dosen'),getAllPendaftaran, (req, res) => {
-    res.render("dashboardDsn",{ title: 'Nilai' });
+    res.render("dashboardDsn",{ title: 'Dashboard' });
 });
 
 router.post("/generate", verifyTokenAndRole('dosen'),generate)
