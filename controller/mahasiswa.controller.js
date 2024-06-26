@@ -6,43 +6,7 @@ const {
   UjianRemedial,
   RiwayatPendaftaran,
 } = require("../models");
-const multer = require("multer");
 
-
-const storage = multer.diskStorage({
-    destination: function (req, file, cb) {
-        cb(null, 'assets/uploads/'); 
-    },
-    filename: function (req, file, cb) {
-        const uniqueSuffix = Date.now() + '-' + Math.round(Math.random() * 1E9);
-        cb(null, uniqueSuffix + '-' + file.originalname);
-    }
-});
-
-
-const fileFilter = (req, file, cb) => {
-  if (
-    file.mimetype === "image/jpeg" ||
-    file.mimetype === "image/png" ||
-    file.mimetype === "application/pdf"
-  ) {
-    cb(null, true);
-  } else {
-    cb(
-      new Error("Invalid file type, only JPEG, PNG, and PDF is allowed!"),
-      false
-    );
-  }
-};
-
-
-const upload = multer({
-  storage: storage,
-  limits: {
-    fileSize: 1024 * 1024 * 5, 
-  },
-  fileFilter: fileFilter,
-});
 
 
 const getMahasiswaData = async (req, res, next) => {
@@ -71,44 +35,7 @@ const getAllDataMahasiswa = async (req, res, next) => {
 };
 
 
-const createPendaftaranUjian = async (req, res) => {
-    try {
-        const { id_ujian, nilai_sebelumnya, alasan } = req.body;
-        const bukti_pembayaran = req.file ? `/uploads/${req.file.filename}` : null;
 
-        
-        const mahasiswa = await Mahasiswa.findOne({ where: { userId: req.userId } });
-        
-        if (!bukti_pembayaran) {
-            return res.status(400).json({
-                message: 'File bukti pembayaran tidak ditemukan'
-            });
-        }   
-
-        const id_mahasiswa = mahasiswa.id;
-
-        const newPendaftaran = await PendaftaranUjian.create({
-            id_mahasiswa,
-            id_ujian,
-            tanggal_pendaftaran: new Date(),
-            bukti_pembayaran,
-            nilai_sebelumnya,
-            alasan,
-            status_verifikasi: "diproses"
-        });
-
-    res.status(200).json({
-      message: "Pendaftaran berhasil disimpan",
-      data: newPendaftaran,
-    });
-  } catch (error) {
-    console.error("Error creating pendaftaran:", error);
-    res.status(500).json({
-      message: "Terjadi kesalahan saat menyimpan pendaftaran",
-      error,
-    });
-  }
-};
 
 
 const getAllRiwayat = async (req, res, next) => {

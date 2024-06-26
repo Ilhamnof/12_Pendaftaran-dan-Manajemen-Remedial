@@ -18,7 +18,6 @@ router.get('/ubah', verifyTokenAndRole('mahasiswa'), (req, res) => {
 router.get('/formulir', verifyTokenAndRole('mahasiswa'),getMahasiswaData,getAllMatkul,(req, res) => {
     res.render('formulir', { title: 'Formulir' }); // Menambahkan title
 });
-router.post('/pendaftaran', verifyTokenAndRole('mahasiswa'),upload.single('bukti_pembayaran'), createPendaftaranUjian);
 
 router.get('/faq', verifyTokenAndRole('mahasiswa'),getMahasiswaData, (req, res) => {
     res.render('faq', { title: 'FaQ' }); // Menambahkan title
