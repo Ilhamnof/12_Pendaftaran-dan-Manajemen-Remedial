@@ -2,12 +2,13 @@ const {UjianRemedial,PendaftaranUjian,Mahasiswa} = require('../models');
 
 const inputMatkul = async (req, res) => {
     try {
-    const { nama_matkul, jadwal, deskripsi, materi_ujian } = req.body;
+    const { nama_matkul, jadwal, deskripsi, materi_ujian, dosen_pengampu } = req.body;
     const ujianRemedial = await UjianRemedial.create({
         nama_matkul,
         jadwal,
         deskripsi,
         materi_ujian,
+        dosen_pengampu,
     });
     res.status(200).json({ message: 'Data berhasil disimpan', data: ujianRemedial });
     } catch (error) {

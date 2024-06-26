@@ -28,8 +28,8 @@
                                 </td>
                                 <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-800"><%= pendaftaran.ujian.nama_matkul  %></td>
                                 <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-800"><%= new Date(pendaftaran.tanggal_pendaftaran).toLocaleDateString() %> <%= new Date(pendaftaran.tanggal_pendaftaran).toLocaleTimeString() %></td>
-                                <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-800 text-center">-</td> 
-                                <!-- edit this ↑↑↑ later for bukti pembayaran -->
+                                <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-800"><%= pendaftaran.bukti_pembayaran  %></td> 
+                                
                                 <td class="px-6 py-4 whitespace-nowrap text-center text-sm font-medium">
                                     <a href="/admin/detail/<%= pendaftaran.id %>" style="color: white; background-color: #3B82F6; padding: 8px 16px; border-radius: 8px; text-decoration: none; display: inline-block;">Detail</a>
                                     <form action="/admin/status-pendaftaran/approve" method="POST" class="inline-block" style="display: inline;">

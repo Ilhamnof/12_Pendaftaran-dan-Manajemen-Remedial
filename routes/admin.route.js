@@ -24,9 +24,7 @@ router.get('/pertanyaan',verifyTokenAndRole('admin'), (req,res)=>{
 router.get('/nilai-remedial',verifyTokenAndRole('admin'), (req,res)=>{
     res.render('nilai-remedial',{ title: 'Nilai Remedial' });
 });
-router.get('/calendar',verifyTokenAndRole('admin'), (req,res)=>{
-    res.render('calendar',{ title: 'Calendar' });
-});
+
 router.get('/ubah',verifyTokenAndRole('admin'), (req,res)=>{
     res.render('ubahPw');
 });
