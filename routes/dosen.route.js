@@ -1,13 +1,15 @@
 const express = require('express');
 const router = express.Router();
 const verifyTokenAndRole = require('../middleware/verifyTokenAndRole');
+const { getAllPendaftaran ,getAllMatkul, getAllStatusPendaftaran} = require("../controller/admin.controller");
+const { updateNilai, generate } = require("../controller/dosen.controller");
 const { getAllDataMahasiswa, tambahNilaiMahasiswa, getAllNilai, updateVerifikasi  } = require("../controller/mahasiswa.controller");
-const {getAllMatkul, getAllStatusPendaftaran} = require ("../controller/admin.controller")
 
-
-router.get('/dashboard', verifyTokenAndRole('dosen'), (req, res) => {
-    res.render('headDsn',{ title: 'Dashboard' });
+router.get("/dashboard", verifyTokenAndRole('dosen'),getAllPendaftaran, (req, res) => {
+    res.render("dashboardDsn",{ title: 'Dashboard' });
 });
+
+router.post("/generate", verifyTokenAndRole('dosen'),generate)
 
 router.get('/daftar-mahasiswa',verifyTokenAndRole('dosen'), getAllDataMahasiswa,(req,res)=>{
     res.render('daftarMhs',{ title: 'Daftar Mahasiswa' });

@@ -25,7 +25,6 @@ const auth = require("./routes/auth.route");
 const mahasiswa = require("./routes/mahasiswa.route");
 const dosen = require("./routes/dosen.route");
 const admin = require("./routes/admin.route");
-// Middleware untuk parsing application/x-www-form-urlencoded
 
 server.use("/auth", auth);
 server.use("/", mahasiswa);
