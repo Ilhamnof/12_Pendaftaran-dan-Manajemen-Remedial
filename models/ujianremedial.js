@@ -10,7 +10,8 @@ module.exports = (sequelize, DataTypes) => {
     nama_matkul: DataTypes.STRING,
     jadwal: DataTypes.DATE,
     deskripsi: DataTypes.TEXT,
-    materi_ujian: DataTypes.STRING
+    materi_ujian: DataTypes.STRING,
+    dosen_pengampu: DataTypes.STRING
   }, {
     sequelize,
     modelName: 'UjianRemedial',
