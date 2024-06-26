@@ -155,30 +155,40 @@ const notif = async (req, res) => {
 
 const tambahNilaiMahasiswa = async (req, res) => {
   try {
-    const { mahasiswaId, nilai } = req.body;
+    const { mahasiswaNilai } = req.body;
 
-    
-
-    if (!mahasiswaId || !nilai) {
-      return res.status(400).json({ message: "Mahasiswa ID dan nilai wajib diisi" });
+    if (!mahasiswaNilai || !Array.isArray(mahasiswaNilai)) {
+      return res.status(400).json({ message: "Data nilai mahasiswa tidak valid" });
     }
 
-    const pendaftaran = await PendaftaranUjian.findOne({
-      where: { id: mahasiswaId }    });
+    const promises = mahasiswaNilai.map(async (item) => {
+      const { mahasiswaId, nilai } = item;
 
-    if (!pendaftaran) {
-      return res.status(404).json({ message: "Pendaftaran mahasiswa tidak ditemukan" });
-    }
+      if (!mahasiswaId || !nilai) {
+        throw new Error(`Mahasiswa ID dan nilai wajib diisi untuk ID ${mahasiswaId}`);
+      }
 
-    pendaftaran.nilai = nilai;
-    await pendaftaran.save();
+      const pendaftaran = await PendaftaranUjian.findOne({
+        where: { id: mahasiswaId }
+      });
 
-    res.status(200).json({ message: "Nilai berhasil diperbarui", data: pendaftaran });
+      if (!pendaftaran) {
+        throw new Error(`Pendaftaran mahasiswa tidak ditemukan untuk ID ${mahasiswaId}`);
+      }
+
+      pendaftaran.nilai = nilai;
+      return pendaftaran.save();
+    });
+
+    await Promise.all(promises);
+
+    res.status(200).json({ message: "Nilai berhasil diperbarui" });
   } catch (error) {
     console.error("Error updating nilai:", error);
     res.status(500).json({ message: "Terjadi kesalahan", error });
   }
 };
+
 
 
 const getAllNilai = async (req, res, next) => {

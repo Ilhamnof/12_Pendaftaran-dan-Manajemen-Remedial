@@ -9,9 +9,8 @@
 
     <form action="/dosen/generate" method="post">
     <button type="submit" class="py-2 px-3 inline-flex items-center gap-x-2 text-sm font-semibold rounded-lg border border-transparent bg-blue-600 text-white hover:bg-blue-700 disabled:opacity-50 disabled:pointer-events-none" href="#">        
-        Print
-        <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-printer"><path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"/><path d="M6 9V3a1 1 0 0 1 1-1h10a1 1 0 0 1 1 1v6"/><rect x="6" y="14" width="12" height="8" rx="1"/></svg>
-    </button>
+        Unduh
+        <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-download"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" x2="12" y1="15" y2="3"/></svg>    </button>
 </form>
 </div>
 
@@ -19,7 +18,7 @@
 <div class="flex flex-col">
     <div class="-m-1.5 overflow-x-auto">
         <div class="p-1.5 min-w-full inline-block align-middle">
-            <form id="updateNilaiForm" action="/dosen/addNilai" method="POST">
+            <form id="updateNilaiForm" action="/dosen/tambah-nilai-mahasiswa" method="POST">
                 <div class="border rounded-lg overflow-hidden">
                     <table class="min-w-full divide-y divide-gray-200">
                         <thead class="bg-gray-50">
@@ -33,14 +32,15 @@
                             </tr>
                         </thead>
                         <tbody class="divide-y divide-gray-200">
-                            <% pendaftaran.forEach((status) => { %>
+                            <% pendaftaran.forEach((status, index) => { %>
                                 <tr>
                                     <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-800"><%= status.mahasiswa.nim %></td>
                                     <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-800"><%= status.mahasiswa.nama %></td>
                                     <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-800"><%= status.ujian.nama_matkul %></td>
                                     <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-800"><%= status.nilai_sebelumnya %></td>
                                     <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-800">
-                                        <input id="nilaiBaru-<%= status.id %>" name="nilaiBaru[<%= status.id %>]" style="width:80px; text-align: center;padding: 4px 0 4px 0;" type="text" value="<%= status.nilai %>" readonly>
+                                        <input type="hidden" name="mahasiswaNilai[<%= index %>][mahasiswaId]" value="<%= status.id %>">
+                                        <input type="text" name="mahasiswaNilai[<%= index %>][nilai]" id="nilaiBaru-<%= status.id %>" style="width:80px; text-align: center;padding: 4px 0 4px 0;" value="<%= status.nilai %>" readonly>
                                     </td>
                                     <td class="px-6 py-4 whitespace-nowrap text-center text-sm font-medium">
                                         <form action="/admin/deletePendaftaran" method="POST" onsubmit="return confirm('Are you sure you want to delete this mahasiswa?');">
@@ -49,8 +49,6 @@
                                         </form>
                                     </td>
                                 </tr>
-        
-
                             <% }) %>
                         </tbody>
                     </table>
@@ -61,6 +59,7 @@
                     </button>
                 </div>
             </form>
+            
         </div>
     </div>
 </div>
@@ -89,6 +88,55 @@
             nilaiBaruInputs.forEach(input => {
                 input.setAttribute('readonly', 'readonly');
             });
+        });
+
+
+        document.getElementById('updateNilaiForm').addEventListener('submit', async function(event) {
+            event.preventDefault();
+
+            const rows = document.querySelectorAll('#updateNilaiForm tbody tr');
+            const mahasiswaNilai = [];
+
+            rows.forEach(row => {
+                const mahasiswaId = row.querySelector('input[name*="[mahasiswaId]"]').value;
+                const nilai = row.querySelector('input[name*="[nilai]"]').value;
+
+                mahasiswaNilai.push({ mahasiswaId, nilai });
+            });
+
+            try {
+                const response = await fetch('/dosen/tambah-nilai-mahasiswa', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({ mahasiswaNilai })
+                });
+
+                const result = await response.json();
+                if (response.ok) {
+                    Swal.fire({
+                        icon: 'success',
+                        title: 'Berhasil',
+                        text: result.message,
+                    }).then(() => {
+                    window.location.reload();
+                });
+                } else {
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Gagal',
+                        text: result.message || 'Gagal memperbarui nilai',
+                    });
+                }
+            } catch (error) {
+                console.error('Error updating nilai:', error);
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Kesalahan',
+                    text: 'Terjadi kesalahan saat memperbarui nilai',
+                });
+            }
         });
     });
 </script>

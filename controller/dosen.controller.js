@@ -31,7 +31,7 @@ const generate = async (req, res) => {
 
         
         res.setHeader('Content-Type', 'application/pdf');
-        res.setHeader('Content-Disposition', 'attachment; filename=nilai_akhir_remedial.pdf');
+        res.setHeader('Content-Disposition', 'attachment; filename=Nilai Akhir Remedial.pdf');
 
         doc.pipe(res);
 
@@ -139,32 +139,6 @@ function drawTable(doc, table) {
     doc.text('Ilham Nofaldi', signatureX, signatureZ);
     doc.text('NIP. 12131273124', signatureX, signatureZ + 12);
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 module.exports = { updateNilai,generate };

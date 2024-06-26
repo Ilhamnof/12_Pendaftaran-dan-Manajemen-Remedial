@@ -27,6 +27,9 @@ router.get('/nilai-remedial',verifyTokenAndRole('admin'),getAllPendaftaran, (req
 router.get('/calendar',verifyTokenAndRole('admin'), (req,res)=>{
     res.render('calendar',{ title: 'Calendar' });
 });
+router.get('/konten',verifyTokenAndRole('admin'), (req,res)=>{
+    res.render('konten',{ title: 'Konten' });
+});
 router.get('/ubah',verifyTokenAndRole('admin'), (req,res)=>{
     res.render('ubahPw');
 });
