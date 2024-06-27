@@ -51,6 +51,9 @@ const generate = async (req, res) => {
 
         
         const pendaftaran = await PendaftaranUjian.findAll({
+            where: {
+                status_verifikasi: 'diverifikasi'
+                },
             include: [
                 {
                     model: Mahasiswa,
@@ -102,7 +105,7 @@ function drawTable(doc, table) {
     doc.fontSize(11);
     table.headers.forEach((header, i) => {
         const x = startX + colWidths.slice(0, i).reduce((a, b) => a + b, 0);
-        doc.rect(x, startY, colWidths[i], rowHeight).stroke();
+        doc.rect(x, startY, colWidths[i], rowHeight).stroke(1);
         doc.text(header, x + 5, startY + 10, {
             width: colWidths[i] - 10,
             align: 'center'
@@ -140,5 +143,34 @@ function drawTable(doc, table) {
     doc.text('NIP. 12131273124', signatureX, signatureZ + 12);
 }
 
+const getAllPendaftaranVerif = async (req, res, next) => {
+    try {
+        const userId = req.userId;
+        console.log('UserID:', userId);
+        const pendaftaran = await PendaftaranUjian.findAll({
+            where: {
+            status_verifikasi: 'diverifikasi'
+            },
+            include: [
+                {
+                    model: Mahasiswa,
+                    as: 'mahasiswa',
+                    required : true,
+                },
+                {
+                    model: UjianRemedial,
+                    as: 'ujian',
+                    required : true,
+                }
+            ]    
+        });
+        console.log('Riwayat:', pendaftaran); 
+        res.locals.pendaftaran = pendaftaran;
+        next();
+    } catch (error) {
+        console.error('Error:', error);
+        res.status(500).send('Internal Server Error');
+    }
+};
 
-module.exports = { updateNilai,generate };
+module.exports = { updateNilai,generate,getAllPendaftaranVerif };

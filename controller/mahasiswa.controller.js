@@ -114,20 +114,25 @@ const createPendaftaranUjian = async (req, res) => {
 const getAllRiwayat = async (req, res, next) => {
   try {
     const userId = req.userId;
-    const riwayat = await RiwayatPendaftaran.findAll({
+    const pendaftaran = await PendaftaranUjian.findAll({
+      where: {
+      status_verifikasi: 'selesai',
+      },
       include: [
-        {
-          model: PendaftaranUjian,
-          as: "pendaftaran",
-          required: true,
-          include: [
-            { model: Mahasiswa, as: "mahasiswa", where: { userId: userId } },
-            { model: UjianRemedial, as: "ujian", required: true },
-          ],
-        },
-      ],
-    });
-    res.locals.riwayat = riwayat;
+          {
+              model: Mahasiswa,
+              as: 'mahasiswa',
+              required : true,
+              where: { userId: userId }
+          },
+          {
+              model: UjianRemedial,
+              as: 'ujian',
+              required : true,
+          }
+      ]    
+  });
+    res.locals.pendaftaran = pendaftaran;
     next();
   } catch (error) {
     console.error("Error:", error);

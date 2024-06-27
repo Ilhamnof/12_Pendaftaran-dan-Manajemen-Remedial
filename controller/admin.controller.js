@@ -41,6 +41,8 @@ const getAllPendaftaran = async (req, res, next) => {
         res.status(500).send('Internal Server Error');
     }
 };
+
+
 const getAllMatkul = async (req, res, next) => {
     try {
         const userId = req.userId;

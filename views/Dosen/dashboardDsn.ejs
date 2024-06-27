@@ -8,10 +8,11 @@
     </a>
 
     <form action="/dosen/generate" method="post">
-    <button type="submit" class="py-2 px-3 inline-flex items-center gap-x-2 text-sm font-semibold rounded-lg border border-transparent bg-blue-600 text-white hover:bg-blue-700 disabled:opacity-50 disabled:pointer-events-none" href="#">        
-        Unduh
-        <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-download"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" x2="12" y1="15" y2="3"/></svg>    </button>
-</form>
+        <button type="submit" class="py-2 px-3 inline-flex items-center gap-x-2 text-sm font-semibold rounded-lg border border-transparent bg-blue-600 text-white hover:bg-blue-700 disabled:opacity-50 disabled:pointer-events-none" href="#">        
+            Unduh
+            <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-download"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" x2="12" y1="15" y2="3"/></svg>
+        </button>
+    </form>
 </div>
 
 <!-- Table -->
@@ -52,7 +53,48 @@
                     </button>
                 </div>
             </form>
-            
+        </div>
+    </div>
+</div>
+
+<!-- Table for status update -->
+<div class="flex flex-col mt-8">
+    <div class="-m-1.5 overflow-x-auto">
+        <div class="p-1.5 min-w-full inline-block align-middle">
+            <div class="border rounded-lg overflow-hidden">
+                <table class="min-w-full divide-y divide-gray-200">
+                    <thead class="bg-gray-50">
+                        <tr>
+                            <th scope="col" class="px-6 py-3 text-start text-xs font-medium text-gray-500 uppercase">NIM</th>
+                            <th scope="col" class="px-6 py-3 text-start text-xs font-medium text-gray-500 uppercase">Nama</th>
+                            <th scope="col" class="px-6 py-3 text-start text-xs font-medium text-gray-500 uppercase">Mata Kuliah Ujian</th>
+                            <th scope="col" class="px-6 py-3 text-start text-xs font-medium text-gray-500 uppercase">Nilai Sebelumnya</th>
+                            <th scope="col" class="px-6 py-3 text-start text-xs font-medium text-gray-500 uppercase">Status Verifikasi</th>
+                        </tr>
+                    </thead>
+                    <tbody class="divide-y divide-gray-200">
+                        <% pendaftaran.forEach((status) => { %>
+                            <tr>
+                                <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-800"><%= status.mahasiswa.nim %></td>
+                                <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-800"><%= status.mahasiswa.nama %></td>
+                                <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-800"><%= status.ujian.nama_matkul %></td>
+                                <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-800"><%= status.nilai_sebelumnya %></td>
+                                <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-800">
+                                    <form action="/admin/updateStatus" method="POST">
+                                        <input type="hidden" name="id" value="<%= status.id %>">
+                                        <select name="status_verifikasi" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5">
+                                            <option value="diverifikasi" <%= status.status_verifikasi === 'diverifikasi' ? 'selected' : '' %>>Diverifikasi</option>
+                                            <option value="selesai" <%= status.status_verifikasi === 'selesai' ? 'selected' : '' %>>Selesai</option>
+                                            <option value="ditolak" <%= status.status_verifikasi === 'ditolak' ? 'selected' : '' %>>Ditolak</option>
+                                        </select>
+                                        <button type="submit" class="mt-2 inline-flex items-center gap-x-2 text-sm font-semibold rounded-lg border border-transparent text-blue-600 hover:text-blue-800 disabled:opacity-50 disabled:pointer-events-none">Update</button>
+                                    </form>
+                                </td>
+                            </tr>
+                        <% }) %>
+                    </tbody>
+                </table>
+            </div>
         </div>
     </div>
 </div>
@@ -76,15 +118,7 @@
 
         // Tambahkan event listener untuk form submit
         const updateNilaiForm = document.getElementById('updateNilaiForm');
-        updateNilaiForm.addEventListener('submit', function(event) {
-            // Setelah submit, kembalikan atribut readonly pada semua input nilaiBaru
-            nilaiBaruInputs.forEach(input => {
-                input.setAttribute('readonly', 'readonly');
-            });
-        });
-
-
-        document.getElementById('updateNilaiForm').addEventListener('submit', async function(event) {
+        updateNilaiForm.addEventListener('submit', async function(event) {
             event.preventDefault();
 
             const rows = document.querySelectorAll('#updateNilaiForm tbody tr');
