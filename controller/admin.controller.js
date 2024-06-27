@@ -2,12 +2,13 @@ const {UjianRemedial,PendaftaranUjian,Mahasiswa,Nilai} = require('../models');
 
 const inputMatkul = async (req, res) => {
     try {
-    const { nama_matkul, jadwal, deskripsi, materi_ujian } = req.body;
+    const { nama_matkul, jadwal, deskripsi, materi_ujian, dosen_pengampu } = req.body;
     const ujianRemedial = await UjianRemedial.create({
         nama_matkul,
         jadwal,
         deskripsi,
         materi_ujian,
+        dosen_pengampu,
     });
     res.status(200).json({ message: 'Data berhasil disimpan', data: ujianRemedial });
     } catch (error) {
@@ -62,6 +63,16 @@ const deletePendaftaran = async (req, res) => {
     try {
         const { id } = req.body;
         await PendaftaranUjian.destroy({ where: { id } });
+        res.redirect('/admin/dashboard');
+    } catch (error) {
+        console.error('Error:', error);
+        res.status(500).send('Internal Server Error');
+    }
+};
+const deleteMatkul = async (req, res) => {
+    try {
+        const { id } = req.body;
+        await UjianRemedial.destroy({ where: { id } });
         res.redirect('/admin/dashboard');
     } catch (error) {
         console.error('Error:', error);
@@ -124,4 +135,5 @@ module.exports = {
     getAllStatusPendaftaran,
     approvePendaftaran,
     rejectPendaftaran,
+    deleteMatkul,
 };

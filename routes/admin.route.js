@@ -2,7 +2,7 @@ const express = require('express');
 const router = express.Router();
 const verifyTokenAndRole = require('../middleware/verifyTokenAndRole');
 const { getAllDataMahasiswa,deleteMahasiswa } = require("../controller/mahasiswa.controller");
-const {inputMatkul, getAllPendaftaran, deletePendaftaran, getAllMatkul, getAllStatusPendaftaran, approvePendaftaran, rejectPendaftaran, } = require("../controller/admin.controller");
+const {inputMatkul, getAllPendaftaran, deletePendaftaran, getAllMatkul, getAllStatusPendaftaran, approvePendaftaran, rejectPendaftaran, deleteMatkul, } = require("../controller/admin.controller");
 const {PendaftaranUjian} = require('../models');
 // const controller = require('../controller/auth.controller');
 
@@ -36,6 +36,7 @@ router.get('/ubah',verifyTokenAndRole('admin'), (req,res)=>{
 
 router.post('/delete', verifyTokenAndRole('admin'), deleteMahasiswa);
 router.post('/deletePendaftaran', verifyTokenAndRole('admin'), deletePendaftaran);
+router.post('/deleteMatkul', verifyTokenAndRole('admin'), deleteMatkul);
 
 router.post('/tambah-matkul',inputMatkul, (req,res)=>{
     res.redirect('/admin/tambah-matkul');

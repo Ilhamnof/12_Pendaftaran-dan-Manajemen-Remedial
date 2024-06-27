@@ -8,6 +8,7 @@ module.exports = (sequelize, DataTypes) => {
   }
   UjianRemedial.init({
     nama_matkul: DataTypes.STRING,
+    dosen_pengampu: DataTypes.STRING,
     jadwal: DataTypes.DATE,
     deskripsi: DataTypes.TEXT,
     materi_ujian: DataTypes.STRING

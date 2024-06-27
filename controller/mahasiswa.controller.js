@@ -115,9 +115,9 @@ const getAllRiwayat = async (req, res, next) => {
   try {
     const userId = req.userId;
     const pendaftaran = await PendaftaranUjian.findAll({
-      where: {
-      status_verifikasi: 'selesai',
-      },
+      // where: {
+      // status_verifikasi: 'selesai',
+      // },
       include: [
           {
               model: Mahasiswa,

@@ -73,7 +73,14 @@
                 <th scope="col" class="px-6 py-3 text-start">
                     <div class="flex items-center gap-x-2">
                     <span class="text-xs font-semibold uppercase tracking-wide text-gray-800">
-                        Nilai
+                        Nilai Sebelumnya
+                    </span>
+                    </div>
+                </th>
+                <th scope="col" class="px-6 py-3 text-start">
+                    <div class="flex items-center gap-x-2">
+                    <span class="whitespace-nowrap text-xs font-semibold uppercase tracking-wide text-gray-800">
+                        Nilai Baru
                     </span>
                     </div>
                 </th>
@@ -118,14 +125,21 @@
                 <td class="size-px whitespace-nowrap">
                     <button type="button" class="block" data-hs-overlay="#hs-ai-invoice-modal">
                     <span class="block px-6 py-2">
-                        <span class="text-sm text-gray-600">10 Jan 2023</span>
+                        <span class="text-sm text-gray-600"><%=mahasiswa.status_verifikasi%></span>
                     </span>
                     </button>
                 </td>
                 <td class="size-px whitespace-nowrap">
                     <button type="button" class="block" data-hs-overlay="#hs-ai-invoice-modal">
                     <span class="block px-6 py-2">
-                        <span class="text-sm text-gray-600">28 Dec, 12:12</span>
+                        <span class="text-sm text-gray-600"><%=mahasiswa.nilai_sebelumnya%></span>
+                    </span>
+                    </button>
+                </td>
+                <td class="size-px whitespace-nowrap">
+                    <button type="button" class="block" data-hs-overlay="#hs-ai-invoice-modal">
+                    <span class="block px-6 py-2">
+                        <span class="text-sm text-gray-600"><%=mahasiswa.nilai%></span>
                     </span>
                     </button>
                 </td>
