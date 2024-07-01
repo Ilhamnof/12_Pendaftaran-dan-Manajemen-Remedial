@@ -11,6 +11,9 @@ module.exports = {
       nama_matkul: {
         type: Sequelize.STRING
       },
+      dosen_pengampu: {
+        type: Sequelize.STRING
+      },
       jadwal: {
         type: Sequelize.DATE
       },

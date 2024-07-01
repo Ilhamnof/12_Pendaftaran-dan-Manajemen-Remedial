@@ -1,4 +1,4 @@
-const {UjianRemedial,PendaftaranUjian,Mahasiswa,Nilai} = require('../models');
+const {UjianRemedial,PendaftaranUjian,Mahasiswa,Nilai, KontenWebsite} = require('../models');
 
 const inputMatkul = async (req, res) => {
     try {
@@ -14,6 +14,22 @@ const inputMatkul = async (req, res) => {
     } catch (error) {
     res.status(500).json({ message: 'Terjadi kesalahan', error });
     }
+};
+
+const inputKonten = async (req, res) => {
+  try {
+    const { judul, tipe_konten, isi } = req.body;
+    const konten = await KontenWebsite.create({
+      judul,
+      tipe_konten,
+      isi,
+      tanggal_dibuat: new Date(),
+    });
+    res.status(200).json({ message: 'Data berhasil disimpan', data: konten });
+  }
+  catch (error) {
+    res.status(500).json({ message: 'Terjadi kesalahan', error });
+  }
 };
 
 const getAllPendaftaran = async (req, res, next) => {
@@ -42,6 +58,8 @@ const getAllPendaftaran = async (req, res, next) => {
         res.status(500).send('Internal Server Error');
     }
 };
+
+
 const getAllMatkul = async (req, res, next) => {
     try {
         const userId = req.userId;
@@ -61,6 +79,16 @@ const deletePendaftaran = async (req, res) => {
     try {
         const { id } = req.body;
         await PendaftaranUjian.destroy({ where: { id } });
+        res.redirect('/admin/dashboard');
+    } catch (error) {
+        console.error('Error:', error);
+        res.status(500).send('Internal Server Error');
+    }
+};
+const deleteMatkul = async (req, res) => {
+    try {
+        const { id } = req.body;
+        await UjianRemedial.destroy({ where: { id } });
         res.redirect('/admin/dashboard');
     } catch (error) {
         console.error('Error:', error);
@@ -123,4 +151,6 @@ module.exports = {
     getAllStatusPendaftaran,
     approvePendaftaran,
     rejectPendaftaran,
+    deleteMatkul,
+    inputKonten,
 };

@@ -19,6 +19,7 @@ router.get('/formulir', verifyTokenAndRole('mahasiswa'),getMahasiswaData,getAllM
     res.render('formulir', { title: 'Formulir' }); // Menambahkan title
 });
 
+
 router.get('/faq', verifyTokenAndRole('mahasiswa'),getMahasiswaData, (req, res) => {
     res.render('faq', { title: 'FaQ' }); // Menambahkan title
 });

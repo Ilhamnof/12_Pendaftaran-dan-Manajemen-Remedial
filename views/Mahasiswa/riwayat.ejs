@@ -73,7 +73,14 @@
                 <th scope="col" class="px-6 py-3 text-start">
                     <div class="flex items-center gap-x-2">
                     <span class="text-xs font-semibold uppercase tracking-wide text-gray-800">
-                        Nilai
+                        Nilai Sebelumnya
+                    </span>
+                    </div>
+                </th>
+                <th scope="col" class="px-6 py-3 text-start">
+                    <div class="flex items-center gap-x-2">
+                    <span class="whitespace-nowrap text-xs font-semibold uppercase tracking-wide text-gray-800">
+                        Nilai Baru
                     </span>
                     </div>
                 </th>
@@ -83,19 +90,19 @@
             </thead>
 
             <tbody class="divide-y divide-gray-200">
-                <% riwayat.forEach(mahasiswa => { %>
+                <% pendaftaran.forEach(mahasiswa => { %>
                 <tr class="bg-white hover:bg-gray-50">
                 <td class="size-px whitespace-nowrap">
                     
                     <span class="block px-6 py-2">
-                        <span class="font-mono text-sm text-blue-600"><%=mahasiswa.pendaftaran.ujian.nama_matkul%></span>
+                        <span class="font-mono text-sm text-blue-600"><%=mahasiswa.ujian.nama_matkul%></span>
                     </span>
                     
                 </td>
                 <td class="size-px whitespace-nowrap">
                     
                     <span class="block px-6 py-2">
-                        <span class="text-sm text-gray-600"><%=new Date (mahasiswa.pendaftaran.ujian.jadwal).toLocaleString('en-GB', {
+                        <span class="text-sm text-gray-600"><%=new Date (mahasiswa.ujian.jadwal).toLocaleString('en-GB', {
                             day: '2-digit',
                             month: 'short',
                             year: 'numeric',
@@ -110,7 +117,7 @@
 
                     <span class="block px-6 py-2">
                         <span class="py-1 px-1.5 inline-flex items-center gap-x-1 text-xs font-medium bg-teal-100 text-teal-800 rounded-full">
-                        <%=mahasiswa.pendaftaran.ujian.materi_ujian%>
+                        <%=mahasiswa.ujian.materi_ujian%>
                         </span>
                     </span>
                 
@@ -118,14 +125,21 @@
                 <td class="size-px whitespace-nowrap">
                     <button type="button" class="block" data-hs-overlay="#hs-ai-invoice-modal">
                     <span class="block px-6 py-2">
-                        <span class="text-sm text-gray-600">10 Jan 2023</span>
+                        <span class="text-sm text-gray-600"><%=mahasiswa.status_verifikasi%></span>
                     </span>
                     </button>
                 </td>
                 <td class="size-px whitespace-nowrap">
                     <button type="button" class="block" data-hs-overlay="#hs-ai-invoice-modal">
                     <span class="block px-6 py-2">
-                        <span class="text-sm text-gray-600">28 Dec, 12:12</span>
+                        <span class="text-sm text-gray-600"><%=mahasiswa.nilai_sebelumnya%></span>
+                    </span>
+                    </button>
+                </td>
+                <td class="size-px whitespace-nowrap">
+                    <button type="button" class="block" data-hs-overlay="#hs-ai-invoice-modal">
+                    <span class="block px-6 py-2">
+                        <span class="text-sm text-gray-600"><%=mahasiswa.nilai%></span>
                     </span>
                     </button>
                 </td>

@@ -3,24 +3,28 @@
 <!-- Comment Form -->
       <div class="text-center">
       </div>
-      <h1 class="text-2xl text-hijau font-bold md:text-4xl md:leading-tight pt-5 pb-8"><%= title %></h1>
       <!-- Card -->
-      <div class="p-4 relative z-10 bg-white border rounded-xl md:p-10">
-        <form>
-          <div class="mb-4 sm:mb-8">
-            <label for="hs-feedback-post-comment-name-1" class="block mb-2 text-sm font-medium">Full name</label>
-            <input type="text" id="hs-feedback-post-comment-name-1" class="py-3 px-4 block w-full border-gray-200 rounded-lg text-sm focus:border-blue-500 focus:ring-blue-500 disabled:opacity-50 disabled:pointer-events-none" placeholder="Full name">
+      <div class="p-4 relative z-10 bg-white border rounded-xl md:p-10 mt-4">
+        <h1 class="text-2xl text-hijau font-bold md:text-4xl md:leading-tight pb-8"><%= title %></h1>
+
+        <form action="/admin/kontenpost" method="post">
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 lg:gap-6">
+            <div>
+              <label for="hs-firstname-hire-us-1" class="block mb-2 text-sm text-gray-700 font-medium">Judul</label>
+              <input type="text" name="judul" id="hs-firstname-hire-us-1" class="border py-3 px-4 block w-full border-gray-200 rounded-lg text-sm focus:border-blue-500 focus:ring-blue-500 disabled:opacity-50 disabled:pointer-events-none   ">
+            </div>
+
+            <div>
+              <label for="hs-lastname-hire-us-1" class="block mb-2 text-sm text-gray-700 font-medium">Tipe</label>
+              <input type="text" name="tipe_konten" id="hs-lastname-hire-us-1" class="border py-3 px-4 block w-full border-gray-200 rounded-lg text-sm focus:border-blue-500 focus:ring-blue-500 disabled:opacity-50 disabled:pointer-events-none">
+            </div>
           </div>
   
-          <div class="mb-4 sm:mb-8">
-            <label for="hs-feedback-post-comment-email-1" class="block mb-2 text-sm font-medium">Email address</label>
-            <input type="email" id="hs-feedback-post-comment-email-1" class="py-3 px-4 block w-full border-gray-200 rounded-lg text-sm focus:border-blue-500 focus:ring-blue-500 disabled:opacity-50 disabled:pointer-events-none" placeholder="Email address">
-          </div>
   
           <div>
-            <label for="hs-feedback-post-comment-textarea-1" class="block mb-2 text-sm font-medium">Comment</label>
+            <label for="hs-feedback-post-comment-textarea-1" class="block mb-2 text-sm font-medium">Isi</label>
             <div class="mt-1">
-              <textarea id="hs-feedback-post-comment-textarea-1" name="hs-feedback-post-comment-textarea-1" rows="3" class="py-3 px-4 block w-full border-gray-200 rounded-lg text-sm focus:border-blue-500 focus:ring-blue-500 disabled:opacity-50 disabled:pointer-events-none" placeholder="Leave your comment here..."></textarea>
+              <textarea id="hs-feedback-post-comment-textarea-1" name="isi" rows="8" class="border py-3 px-4 block w-full border-gray-200 rounded-lg text-sm focus:border-blue-500 focus:ring-blue-500 disabled:opacity-50 disabled:pointer-events-none" placeholder="Isi Konten disini"></textarea>
             </div>
           </div>
   

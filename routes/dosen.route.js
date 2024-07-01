@@ -2,10 +2,10 @@ const express = require('express');
 const router = express.Router();
 const verifyTokenAndRole = require('../middleware/verifyTokenAndRole');
 const { getAllPendaftaran ,getAllMatkul, getAllStatusPendaftaran} = require("../controller/admin.controller");
-const { updateNilai, generate } = require("../controller/dosen.controller");
+const { updateNilai, generate,getAllPendaftaranVerif } = require("../controller/dosen.controller");
 const { getAllDataMahasiswa, tambahNilaiMahasiswa, getAllNilai, updateVerifikasi  } = require("../controller/mahasiswa.controller");
 
-router.get("/dashboard", verifyTokenAndRole('dosen'),getAllPendaftaran, (req, res) => {
+router.get("/dashboard", verifyTokenAndRole('dosen'),getAllPendaftaranVerif, (req, res) => {
     res.render("dashboardDsn",{ title: 'Dashboard' });
 });
 
@@ -43,4 +43,3 @@ router.post('/update-verifikasi',updateVerifikasi, (req, res) => {
 
 
 module.exports = router;
- 
