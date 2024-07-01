@@ -166,20 +166,14 @@
 
 <script>
   document.addEventListener("DOMContentLoaded", function () {
-    // Update id_ujian saat nama_matkul dipilih
-    document
-      .getElementById("nama_matkul")
-      .addEventListener("change", function () {
+
+    document.getElementById("nama_matkul").addEventListener("change", function () {
         const selectedUjianId = this.value;
         document.getElementById("id_ujian").value = selectedUjianId;
       });
 
-    // Handle form submission
-    document
-      .getElementById("pendaftaranForm")
-      .addEventListener("submit", function (event) {
+    document.getElementById("pendaftaranForm").addEventListener("submit", function (event) {
         event.preventDefault();
-
         const formData = new FormData(this);
         const id_ujian = document.getElementById("nama_matkul").value;
         const user_id = document.getElementById("user_id").value;
